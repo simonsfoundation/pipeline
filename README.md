@@ -26,6 +26,6 @@ a 205-family (685 exomes) collection at Simons Foundation.
 ### Getting started
 
 Requred sofware:
-1. [https://www.broadinstitute.org/gatk/ GATK]
-2. [https://github.com/ekg/freebayes Freebayes]
+1. [GATK](https://www.broadinstitute.org/gatk/)
+2. [Freebayes](https://github.com/ekg/freebayes)
 
