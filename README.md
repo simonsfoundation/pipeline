@@ -8,7 +8,7 @@ full-featured, and scalable pipeline that is simple, and modular in its design.
 Almost every step in the pipeline is done via a *Makefile* (GNU make). These
 makefiles can be used on their own to accomplish common bioinformatics operations, or
 they can be stung together in a shell script to compose a pipeline. *Nextgen-pipeline*
-is well suited for processing large number of familiar cohorts, and has been used on
+is well suited for processing large number of familiar cohorts, and has been deployed on
 a 205-family (685 exomes) collection at Simons Foundation.
 
 ### From BAM files to de novo germline mutations
