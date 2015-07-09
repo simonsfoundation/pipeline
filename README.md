@@ -4,7 +4,12 @@
 
 *Nextgen-pipeline* is a computational pipeline for genetic variant detection in
 a single sample, or in a familial cohort (typically a trio, or a quad). It is a
-full-featured, and scalable pipeline that is simple, and modular in its design. Almost every step in the pipeline is done via a *Makefile* (GNU make). These makefiles can be used on their own to accomplish common bioinformatics operations, or they can be stung together in a shell script to compose a pipeline. *Nextgen-pipeline*is well suited for processing large number of familiar cohorts, and has been used on a 205-family(685 exomes) at Simons Foundation.
+full-featured, and scalable pipeline that is simple, and modular in its design.
+Almost every step in the pipeline is done via a *Makefile* (GNU make). These
+makefiles can be used on their own to accomplish common bioinformatics operations, or
+they can be stung together in a shell script to compose a pipeline. *Nextgen-pipeline*
+is well suited for processing large number of familiar cohorts, and has been used on
+a 205-family (685 exomes) collection at Simons Foundation.
 
 ### Features
 #### From BAM files to de novo germline mutations
@@ -16,4 +21,11 @@ full-featured, and scalable pipeline that is simple, and modular in its design. 
     * Apply GATK variant recalibration
     * Apply hard variant filters
     * Call de novo variants with DNMFilter (in development)
-    * Validation aganst CEUTrio, NA12878
+    * Validation against CEUTrio, NA12878
+
+### Getting started
+
+Requred sofware:
+1. [https://www.broadinstitute.org/gatk/ GATK]
+2. [https://github.com/ekg/freebayes Freebayes]
+
