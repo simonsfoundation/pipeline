@@ -1,0 +1,50 @@
+Step 0: 
+    input familyCode*.bam
+Step 1:
+    cleaning
+    input familyCode*.bam
+        filter chr 1-22, X, Y, MT
+        reorder
+        addReplaceGroups
+        dedup
+        index
+        coverageBED
+        compute multiple metrics
+    output: familycode*-cln.bam, familycode*-cln.bed, metrics
+Step 2:
+    splitting bam files for parallel processing
+    input: familycode*-cln.bam, familycode*-cln.bed
+        remove intervals with zero coverage
+        remove gaps
+        bin into N intervals of approximately equal length
+        split bam files
+    output: familycode_1*-cln.bam, ..., familycode_N*-cln.bam
+Step 4:
+    preparation for variant calling
+    input: familycode_1*-cln.bam, ..., familycode_N*-cln.bam
+        GatkRealignerTargetCreator
+        GatkIndelRealigner
+        GatkBaseRecalibrator
+    output: familycode_1*-cln-rcl.bam, ..., familycode_N*-cln-rcl.bam
+Step 5:
+    variant calling
+    input: familycode_1*-cln-rcl.bam, ..., familycode_N*-cln-rcl.bam
+        gatkHaplotypeCaller
+        gatkHaplotypeCaller GVCF
+        FreeBayes
+        Platypus
+    output: familycode_1*-cln-rcl.vcf, ..., familycode_N*-cln-rcl.vcf
+            familycode_1-cln-rcl.vcf, ..., familycode_N-cln-rcl.vcf
+Step 6:
+    merging vcf files
+    input: familycode_1*-cln-rcl.vcf, ..., familycode_N*-cln-rcl.vcf
+            familycode_1-cln-rcl.vcf, ..., familycode_N-cln-rcl.vcf
+    output: familycode*-cln-rcl.vcf
+            familycode-cln-rcl.vcf
+
+
+
+
+        
+
+
