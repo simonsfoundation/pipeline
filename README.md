@@ -47,9 +47,8 @@ Besides commonly present *Python 2.7, JDK, GNU make*, the following packages are
    
 All except GATK come with an install of [bcbio-nextgen](https://github.com/chapmanb/bcbio-nextgen).
 
-'''
-git clone https://github.com/asalomatov/pipeline.git
-'''
+   git clone https://github.com/asalomatov/pipeline.git
+
 Next step is to edit *include.mk* defining *Makefile* to reflect your setup.
 
 
