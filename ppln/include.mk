@@ -1,19 +1,22 @@
-### some variables ################################
-SRCDIR = /nethome/asalomatov/projects/ppln
+### some variables ####################################################
+SRCDIR = ~/projects/pipeline/ppln
+JAVA = /usr/java/jdk1.7.0_65/bin/java
 GAPS = /mnt/scratch/asalomatov/data/hg19/gap_corr23.bed
-PICARDDIR = /bioinfo/software/installs/picard/git 
-GENOMEREF = /bioinfo/data/bcbio/genomes/Hsapiens/GRCh37/seq/GRCh37.fa
-GATK = /bioinfo/software/installs/GATK/3.2-2/GATK/GenomeAnalysisTK.jar
-DBSNP = /bioinfo/data/bcbio/genomes/Hsapiens/GRCh37/variation/dbsnp_138.vcf.gz 
-BEDTLSDIR = /bioinfo/software/installs/bedtools/bedtools-2.17.0
-SAMTOOLS = /bioinfo/software/installs/bcbio/bin/samtools
-FREEBAYES = /bioinfo/software/installs/bcbio/bin/freebayes
+PICARDDIR = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/share/java/picard-1.96
+GENOMEREF = /bioinfo/data/bcbio_nextgen/150607/genomes/Hsapiens/GRCh37/seq/GRCh37.fa
+GATK = /bioinfo/software/builds/GATK/fromGitZip150607/gatk-protected-master/target/executable/GenomeAnalysisTK.jar
+DBSNP = /bioinfo/data/bcbio_nextgen/150607/genomes/Hsapiens/GRCh37/variation/dbsnp_138.vcf.gz
+BEDTLSDIR = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin
+SAMTOOLS = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin/samtools
+FREEBAYES = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin/freebayes
 PLATYPUS = /mnt/scratch/asalomatov/software/installs/bin/Platypus.py
-VCFLIBDIR = /bioinfo/software/installs/bcbio/bin
-BGZIP = /bioinfo/software/installs/bcbio/bin/bgzip
-BCFTOOLS = /bioinfo/software/installs/bcbio/bin/bcftools
+#PLATYPUS = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin/platypus
+VCFLIBDIR = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin
+#VCFLIBDIR = /bioinfo/software/installs/bcbio/bin
+BGZIP = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin/bgzip
+BCFTOOLS = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin/bcftools
 BEDOPSDIR = /bioinfo/software/installs/bedops/git/bin
-SAMBAMBA = /bioinfo/software/installs/bcbio/bin/sambamba
-TABIX = /bioinfo/software/installs/bcbio/bin/tabix
-###########################################
-
+SAMBAMBA = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin/sambamba
+TABIX = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin/tabix
+#######################################################################
+#/mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin

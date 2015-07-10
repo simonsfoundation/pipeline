@@ -47,10 +47,26 @@ Besides commonly present *Python 2.7, JDK, GNU make*, the following packages are
    
 All except GATK come with an install of [bcbio-nextgen](https://github.com/chapmanb/bcbio-nextgen).
 
+```
    git clone https://github.com/asalomatov/pipeline.git
+```
 
 Next step is to edit *include.mk* defining *Makefile* variables to reflect your setup.
 
+Running it:
 
-
+```
+~/pipeline/ppln/pipe03     \
+/path/to/input/bams/       \ #dir with bam file(s)
+/path/to/output/dir        \ #will be created, for final output, metrics, log. 
+familycode                 \ #124 if bams are 123.p1.bam, 123.fa.bam, 123.mo.bam
+WG                         \ #binning method EX, WG(recommended)
+0                          \ #if not 1 recompute bins, else use existing ones - for testing
+tmp                        \ #if tmp work in /tmp, else work in output dir
+~/pipeline/ppln/include.mk \ #makefile with variable definition
+1                          \ #if 0 don't delete intermediate files
+,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF, \
+1                          \#if 1 remove working dir on exit
+/path/to/pipeline/ppln
+```
 

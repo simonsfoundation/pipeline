@@ -1,9 +1,4 @@
 #!/bin/bash                
-#$ -cwd
-#$ -l excl=true
-####$ -e ppl_$JOB_ID.err
-####$ -o ppl_$JOB_ID.out
-#$ -b y
 
 ### bam cleaning, parallelization, and variant callers
 # submit to cluster
@@ -13,18 +8,21 @@
 # /nethome/asalomatov/projects/ppln/include_150607_new_cl.mk 1        \
 # ,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,SplitBam,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF, \
 # 1        
+# /path/to/pipeline/ppln
 
-indir=$1
-outdir=$2
-famcode=$3
-binbam_method=$4
-skip_binbam=$5
-working_dir=$6
-inclmk=$7
-cleanup=$8  #if 0 dont delete interm files
-conf=$9 # comma surrounded list of instructions:
+indir=$1         #directory with bam file(s)
+outdir=$2        #will be created, for final output and metrics
+famcode=$3       #1, if bams are 1.p1.bam, 1.fa.bam, 1.mo.bam
+binbam_method=$4 #EX, WG(recommended)
+skip_binbam=$5   #if not 1 recompute bins, else use existing ones - for testing
+working_dir=$6   #tmp to work in /tmp, else work in outdir
+inclmk=$7        #makefile with variable definition 
+cleanup=$8       #if 0 dont delete intermediate files
+conf=$9          #comma surrounded list of unordered instructions
+rm_work_dir=${10} #if 1 remove working dir on exit 
+srcdir=${11}      #dir with scripts, eg ~/pipeline/ppln
 echo "config is $conf"
-rm_work_dir=${10}
+
 sfx=
 inpd=$indir
 split_chr="True"
@@ -35,12 +33,6 @@ then
 else
     workdir=${outdir}/work
 fi
-#workdir=/tmp/${USER}_working_${famcode}
-#mkdir -p $workdir
-#workdir=$(pwd)
-srcdir=/nethome/asalomatov/projects/ppln
-bedopsdir=/bioinfo/software/installs/bedops/git/bin
-#python -c 'import glob;print glob.glob("vcf*")' | wc -w
 
 function cleanup {
     echo "Should you run 'rm -rf $workdir' on $(hostname)?"
@@ -48,20 +40,15 @@ function cleanup {
         echo "running 'rm -rf $workdir' on $(hostname)"
         rm -rf $workdir
     fi
-    rm -rf $workdir
 }
 trap cleanup EXIT
 
 metricsdir=${outdir}/metrics
-#mkdir -p $outdir
 mkdir -p ${outdir}/logs
 mkdir -p $metricsdir
 
-P=$(/nethome/carriero/bin/nprocNoHT)
-### the following is for running locally
-if [ "$(hostname)" = "scda000" -o "$(hostname)" = "scda001" -o "$(hostname)" = "scda008" ]; then
-    P=12
-fi
+#number of physical cores
+P=$(lscpu -p | grep -v '^#' | awk '{split($0,a,","); print a[2]}' | sort | uniq | wc -l)
 
 echo "Running $famcode on $(hostname) in $workdir using $P cores."
 echo "Running ${0} $@ on $(hostname) in $workdir using $P cores." > ${outdir}/logs/runInfo.txt
@@ -192,14 +179,6 @@ if [ $ret -ne 0 ]; then
     exit 1
 fi
 
-#make -j $P -f ${srcdir}/mergeBed.mk INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
-#ret=$?
-#echo $ret
-#if [ $ret -ne 0 ]; then
-#    echo 'mergeBed.mk INCLMK=$inclmk finished with errors'
-#    exit 1
-#fi
-
 make -j $P -f ${srcdir}/filter23Bed.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
 ret=$?
 echo $ret
@@ -329,11 +308,11 @@ if [[ $skip_binbam -ne 1 ]]; then
         echo "${srcdir}/bedUnion.py finished with an error."
         exit 1
     fi
-    python ${srcdir}/bedPad.py ${workdir}/${famcode}-uni.bed ${workdir}/${famcode}-uni-mrg.bed $bedopsdir 0 $outdir
+    make -j $P -f ${srcdir}/bedPad.mk INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
-        echo "${srcdir}/bedPad.py finished with an error."
+        echo "${srcdir}/bedPad.mk finished with an error."
         exit 1
     fi
     if [ "$binbam_method" == "WG" ]; then
@@ -402,31 +381,6 @@ if [[ $conf == *",HaplotypeCaller,"* ]]; then
         echo "picMergeVcf.mk INCLMK=$inclmk HC finished with errors"
         exit 1
     fi
-    #make -j $P -f ${srcdir}/vcfConcat.mk INCLMK=$inclmk FAMCODE=${famcode}-HC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir SUFFIX=-bin.vcf.gz
-    #ret=$?
-    #echo $ret
-    #if [ $ret -ne 0 ]; then
-    #    echo 'vcfConcat.mk INCLMK=$inclmk HC finished with errors'
-    #    exit 1
-    #fi
-
-    #temp copy all vcf files to output dir.
-    #mkdir -p ${outdir}/vcf
-    #cp -p ${workdir}/*-bin.vcf.gz ${outdir}/vcf 
-    #ret=$?
-    #echo $ret
-    #if [ $ret -ne 0 ]; then
-    #    echo 'vcf copy finished with errors'
-    #    exit 1
-    #fi
-    #
-    #make -j $P -f ${srcdir}/vcfCombine.mk INCLMK=$inclmk FAMCODE=${famcode}-HC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir SUFFIX=-bin.vcf.gz
-    #ret=$?
-    #echo $ret
-    #if [ $ret -ne 0 ]; then
-    #    echo 'vcfCombine.mk INCLMK=$inclmk HC finished with errors'
-    #    exit 1
-    #fi
 
     make -f ${srcdir}/extractByType.mk INCLMK=$inclmk VARTYPE=indels SUFFIX=-vars PREFIX=$famcode-HC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
     ret=$?
@@ -494,14 +448,6 @@ if [[ $conf == *",Freebayes,"* ]]; then
         exit 1
     fi
 
-    #make -j $P -f ${srcdir}/vcfCombine.mk INCLMK=$inclmk FAMCODE=${famcode}-FB INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir SUFFIX=-bin.vcf.gz
-    #ret=$?
-    #echo $ret
-    #if [ $ret -ne 0 ]; then
-    #    echo 'vcfCombine.mk INCLMK=$inclmk FB finished with errors'
-    #    exit 1
-    #fi
-
     cp -p ${workdir}/${famcode}-FB-vars.vcf.gz* ${outdir}/
     ret=$?
     echo $ret
@@ -527,14 +473,6 @@ if [[ $conf == *",Platypus,"* ]]; then
         echo "picMergeVcf.mk INCLMK=$inclmk PL finished with errors"
         exit 1
     fi
-
-    #make -j $P -f ${srcdir}/vcfCombine.mk INCLMK=$inclmk FAMCODE=${famcode}-PL INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir SUFFIX=-bin.vcf.gz
-    #ret=$?
-    #echo $ret
-    #if [ $ret -ne 0 ]; then
-    #    echo 'vcfCombine.mk INCLMK=$inclmk PL finished with errors'
-    #    exit 1
-    #fi
 
     cp -p ${workdir}/${famcode}-PL-vars.vcf.gz* ${outdir}/
     ret=$?
@@ -570,14 +508,6 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
         exit 1
     fi
 
-    #make -j $P -f ${srcdir}/vcfCombine.mk INCLMK=$inclmk FAMCODE=${famcode}-JHC INDIR=$workdir OUTDIR=$workdir LOGDIR=$outdir SUFFIX=-bin.vcf.gz
-    #ret=$?
-    #echo $ret
-    #if [ $ret -ne 0 ]; then
-    #    echo 'vcfCombine.mk INCLMK=$inclmk JHC finished with errors'
-    #    exit 1
-    #fi
-
     cp -p ${workdir}/${famcode}-JHC-vars.vcf.gz* ${outdir}/
     ret=$?
     echo $ret
@@ -588,5 +518,4 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
 fi
 
 echo 'Run completed'
-echo 'Run complete' > ${outdir}/logs/runCompleted.txt
-
+echo 'Run completed' > ${outdir}/logs/runCompleted.txt
