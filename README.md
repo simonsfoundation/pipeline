@@ -31,7 +31,7 @@ a 205-family (685 exomes) collection at Simons Foundation.
 
 ### Getting started
 
-Besides commonly present Python 2.7, JDK, GNU make the following packages are required
+Besides commonly present *Python 2.7, JDK, GNU make*, the following packages are required
    1. [GATK](https://www.broadinstitute.org/gatk/)
    2. [freebayes](https://github.com/ekg/freebayes)
    3. [platypus](http://www.well.ox.ac.uk/platypus)
@@ -46,5 +46,12 @@ Besides commonly present Python 2.7, JDK, GNU make the following packages are re
    12. [SnpEff](http://snpeff.sourceforge.net/)
    
 All except GATK come with an install of [bcbio-nextgen](https://github.com/chapmanb/bcbio-nextgen).
+
+'''
+git clone https://github.com/asalomatov/pipeline.git
+'''
+Next step is to edit *include.mk* defining *Makefile* to reflect your setup.
+
+
 
 
