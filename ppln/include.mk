@@ -18,5 +18,8 @@ BCFTOOLS = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin/b
 BEDOPSDIR = /bioinfo/software/installs/bedops/git/bin
 SAMBAMBA = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin/sambamba
 TABIX = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin/tabix
+HAPMAP = /mnt/scratch/asalomatov/data/b37/hapmap_3.3.b37.vcf
+OMNI = /mnt/scratch/asalomatov/data/b37/1000G_omni2.5.b37.vcf
+SNP1000G = /mnt/scratch/asalomatov/data/b37/1000G_phase1.snps.high_confidence.b37.vcf
 #######################################################################
 #/mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin

@@ -14,7 +14,7 @@ a 205-family (685 exomes) collection at Simons Foundation.
 ### Cluster environments
    - Grid Engine
    - Slurm
-   - Amazon EC2 (to come)
+   - Amazon (to come)
    
 ### From BAM files to de novo germline mutations
 
@@ -48,7 +48,8 @@ Besides commonly present *Python 2.7, JDK, GNU make*, the following packages are
 All except GATK come with an install of [bcbio-nextgen](https://github.com/chapmanb/bcbio-nextgen).
 
 ```
-   git clone https://github.com/asalomatov/pipeline.git
+cd ~
+git clone https://github.com/asalomatov/pipeline.git
 ```
 
 Next step is to edit *include.mk* defining *Makefile* variables to reflect your setup.
@@ -67,6 +68,9 @@ tmp                        \ #if tmp work in /tmp, else work in output dir
 1                          \ #if 0 don't delete intermediate files
 ,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF, \
 1                          \#if 1 remove working dir on exit
-/path/to/pipeline/ppln
+/path/to/pipeline/ppln     \
+max_cores                  \#max number of physical cpu cores to utilize
 ```
+
+### Validation
 

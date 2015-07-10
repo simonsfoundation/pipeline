@@ -21,6 +21,7 @@ cleanup=$8       #if 0 dont delete intermediate files
 conf=$9          #comma surrounded list of unordered instructions
 rm_work_dir=${10} #if 1 remove working dir on exit 
 srcdir=${11}      #dir with scripts, eg ~/pipeline/ppln
+max_cores=${12}   #max physical cpu cores to utilize
 echo "config is $conf"
 
 sfx=
@@ -49,6 +50,9 @@ mkdir -p $metricsdir
 
 #number of physical cores
 P=$(lscpu -p | grep -v '^#' | awk '{split($0,a,","); print a[2]}' | sort | uniq | wc -l)
+if [ $max_cores -lt $P ]; then
+    P=$max_cores
+fi
 
 echo "Running $famcode on $(hostname) in $workdir using $P cores."
 echo "Running ${0} $@ on $(hostname) in $workdir using $P cores." > ${outdir}/logs/runInfo.txt
