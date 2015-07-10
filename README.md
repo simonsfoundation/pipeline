@@ -1,16 +1,21 @@
-## *nextgen-pipeline*
+## *pipeline*
 
 ### Overview
 
-*Nextgen-pipeline* is a computational pipeline for genetic variant detection in
+*pipeline* is a computational pipeline for genetic variant detection in
 a single sample, or in a familial cohort (typically a trio, or a quad). It is a
 full-featured, and scalable pipeline that is simple, and modular in its design.
 Almost every step in the pipeline is done via a *Makefile* (GNU make). These
 makefiles can be used on their own to accomplish common bioinformatics operations, or
-they can be stung together in a shell script to compose a pipeline. *Nextgen-pipeline*
+they can be stung together in a shell script to compose a pipeline. *pipeline*
 is well suited for processing large number of familiar cohorts, and has been deployed on
 a 205-family (685 exomes) collection at Simons Foundation.
 
+### Cluster environments
+   - Grid Engine
+   - Slurm
+   - Amazon EC2 (to come)
+   
 ### From BAM files to de novo germline mutations
 
    - BAM file(s) is input(tested for whole exome, whole genome to come)
@@ -26,7 +31,7 @@ a 205-family (685 exomes) collection at Simons Foundation.
 
 ### Getting started
 
-Required sofware:
+Besides commonly present Python 2.7, JDK, GNU make the following packages are required
    1. [GATK](https://www.broadinstitute.org/gatk/)
    2. [freebayes](https://github.com/ekg/freebayes)
    3. [platypus](http://www.well.ox.ac.uk/platypus)
@@ -40,4 +45,6 @@ Required sofware:
    11. [vcflib](https://github.com/ekg/vcflib)
    12. [SnpEff](http://snpeff.sourceforge.net/)
    
-All except GATK come with an install of excellent [bcbio-nextgen](https://github.com/chapmanb/bcbio-nextgen)
+All except GATK come with an install of [bcbio-nextgen](https://github.com/chapmanb/bcbio-nextgen).
+
+
