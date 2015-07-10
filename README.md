@@ -2,7 +2,7 @@
 
 ### Overview
 
-*pipeline* is a computational pipeline for genetic variant detection in
+*pipeline* is a computational engine for genetic variant detection in
 a single sample, or in a familial cohort (typically a trio, or a quad). It is a
 full-featured, and scalable pipeline that is simple, and modular in its design.
 Almost every step in the pipeline is done via a *Makefile* (GNU make). These
@@ -49,7 +49,7 @@ All except GATK come with an install of [bcbio-nextgen](https://github.com/chapm
 
    git clone https://github.com/asalomatov/pipeline.git
 
-Next step is to edit *include.mk* defining *Makefile* to reflect your setup.
+Next step is to edit *include.mk* defining *Makefile* variables to reflect your setup.
 
 
 
