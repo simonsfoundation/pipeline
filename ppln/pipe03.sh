@@ -521,5 +521,47 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
     fi
 fi
 
+if [[ $conf == *",RecalibVariants,"* ]]; then
+    make -j $P -f ${srcdir}/variantRecalibrate.mk PREFIX=11006-JHC SUFFIX=-vars.vcf.gz T=$P VARTYPE=SNP INCLMK=$inclmk INDIR=$workdir OUTDIR=$workdir LOGDIR=$outdir
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo "variantRecalibrate.mk SNP finished with errors"
+        exit 1
+    fi
+
+    make -j $P -f ${srcdir}/applyRecalibration.mk PREFIX=11006-JHC SUFFIX=-vars.vcf.gz T=$P VARTYPE=SNP INCLMK=$inclmk INDIR=$workdir OUTDIR=$workdir LOGDIR=$outdir
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo "applyRecalibration.mk SNP finished with errors"
+        exit 1
+    fi
+
+    make -j $P -f ${srcdir}/variantRecalibrate.mk PREFIX=11006-JHC SUFFIX=-SNP-vars.vcf.gz T=$P VARTYPE=INDEL INCLMK=$inclmk INDIR=$workdir OUTDIR=$workdir LOGDIR=$outdir
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo "variantRecalibrate.mk INDEL finished with errors"
+        exit 1
+    fi
+
+    make -j $P -f ${srcdir}/applyRecalibration.mk PREFIX=11006-JHC SUFFIX=-recal-SNP-vars.vcf.gz T=$P VARTYPE=INDEL INCLMK=$inclmk INDIR=$workdir OUTDIR=$workdir LOGDIR=$outdir
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo "applyRecalibration.mk INDEL finished with errors"
+        exit 1
+    fi
+
+    cp -p ${workdir}/${famcode}-JHC-recal-vars.vcf.gz* ${outdir}/
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo "copying ${famcode}-JHC-recal-vars.vcf.gz failed"
+        exit 1
+    fi
+fi
+
 echo 'Run completed'
 echo 'Run completed' > ${outdir}/logs/runCompleted.txt

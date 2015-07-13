@@ -11,18 +11,18 @@ INDIR = .
 OUTDIR = .
 LOGDIR = $(OUTDIR)
 TMPDIR = /tmp/$(USR)
+T = 20
 ###
-inFile = $(wildcard $(INDIR)/$(PREFIX)*$(SUFFIX).vcf.gz)
+inFile = $(wildcard $(INDIR)/$(PREFIX)*$(SUFFIX))
 $(info $(inFile))
-#o0 = $(addprefix $(OUTDIR)/, $(patsubst %$(SUFFIX).vcf.,%$(SUFFIX).bam.table,$(notdir $(inFile))))
-#$(info $(o0))
-recallFile = $(OUTDIR)/$(PREFIX)-recalib-$(VARTYPE).recall
-tranchesFile = $(OUTDIR)/$(PREFIX)-recalib-$(VARTYPE).tranches
-rplotFile = $(OUTDIR)/$(PREFIX)-recalib-$(VARTYPE).plots.R
+recalFile = $(OUTDIR)/$(PREFIX)-recal-$(VARTYPE).recal
+tranchesFile = $(OUTDIR)/$(PREFIX)-recal-$(VARTYPE).tranches
+rplotFile = $(OUTDIR)/$(PREFIX)-recal-$(VARTYPE).plots.R
 
-all: $(recallFile)
+all: $(recalFile)
 
-$(OUTDIR)/$(PREFIX)-recalib-$(VARTYPE).recall: $(inFile)
+ifeq ($(VARTYPE),SNP)
+$(recalFile): $(inFile)
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
@@ -41,9 +41,35 @@ $(OUTDIR)/$(PREFIX)-recalib-$(VARTYPE).recall: $(inFile)
 			-an MQ \
 			-an MQRankSum \
 			-an ReadPosRankSum \
-			-mode SNP \
-			-maxGaussians 4 \
+			-mode $(VARTYPE) \
+			-mG 4  \
+			-nt $(T) \
 			-tranche 100.0 -tranche 99.9 -tranche 99.0 -tranche 90.0 \
 			-recalFile $@ \
 			-tranchesFile $(tranchesFile) \
 			-rscriptFile $(rplotFile)
+else
+$(recalFile): $(inFile)
+	mkdir -p $(OUTDIR)
+	mkdir -p $(TMPDIR)
+	mkdir -p $(OUTDIR)
+	$(JAVA) -Xmx256G -jar $(GATK) \
+		    -T VariantRecalibrator \
+			-R $(GENOMEREF) \
+			-input $< \
+			-resource:mills,known=true,training=true,truth=true,prior=12.0 $(MILLSINDEL) \
+			-resource:dbsnp,known=true,training=false,truth=false,prior=2.0 $(DBSNP) \
+			-an QD \
+			-an DP \
+			-an FS \
+			-an SOR \
+			-an MQRankSum \
+			-an ReadPosRankSum \
+			-mode $(VARTYPE) \
+			-tranche 100.0 -tranche 99.9 -tranche 99.0 -tranche 90.0 \
+			-mG 4 \
+			-nt $(T) \
+			-recalFile $@ \
+			-tranchesFile $(tranchesFile) \
+			-rscriptFile $(rplotFile)
+endif
