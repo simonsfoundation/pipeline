@@ -27,3 +27,4 @@ $(OUTDIR)/%$(SUFFIX)-$(REGION).bam: $(INDIR)/%$(SUFFIX).bam
 	samtools view -b -h $< $(REGION) > $@
 	samtools index $@
 #	sambamba view -t 3 -h $< $(REGION) > $@
+#%(sambamba)s view -f bam -h -L %(inbed)s -o %(outf)s %(inbam)s

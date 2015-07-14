@@ -22,6 +22,7 @@ conf=$9          #comma surrounded list of unordered instructions
 rm_work_dir=${10} #if 1 remove working dir on exit 
 srcdir=${11}      #dir with scripts, eg ~/pipeline/ppln
 max_cores=${12}   #max physical cpu cores to utilize
+WGregion=${13}
 echo "config is $conf"
 
 sfx=
@@ -57,8 +58,21 @@ fi
 echo "Running $famcode on $(hostname) in $workdir using $P cores."
 echo "Running ${0} $@ on $(hostname) in $workdir using $P cores." > ${outdir}/logs/runInfo.txt
 
+if [[ $WGregion =~ ^[1-12]+$ ]]; then
+    echo "processing region $WGregion"
+    make -j $P -f ${srcdir}/extractRegionBam.mk BIN=$WGregion INCLMK=$inclmk FAMCODE=$famcode INDIR=$indir OUTDIR=$workdir LOGDIR=$outdir
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo "extractRegionBam.mk BIN=$WGregion finished with errors"
+        exit 1
+    fi
+    inpd=$workdir
+fi
+exit 1
+
 if [[ $conf == *",Reorder,"* ]]; then
-    make -j $P -f ${srcdir}/reordBam.mk INCLMK=$inclmk FAMCODE=$famcode INDIR=$indir OUTDIR=$workdir LOGDIR=$outdir
+    make -j $P -f ${srcdir}/reordBam.mk INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
