@@ -78,10 +78,19 @@ Let's test this pipeline against CEU sample NA12878. Download chromosome 20 high
 coverage bam file, Broad Institute's truth set, and NIST Genome in a Bottle target regions.
 
 ```
-    wget ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/working/20130103_high_cov_trio_bams/NA12878/alignment/NA12878.chrom20.ILLUMINA.bwa.CEU.high_coverage.20120522.bam
-    wget ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/working/20130103_high_cov_trio_bams/NA12878/alignment/NA12878.chrom20.ILLUMINA.bwa.CEU.high_coverage.20120522.bam.bai
-    wget http://ftp.ncbi.nlm.nih.gov/1000genomes/ftp/technical/working/20130806_broad_na12878_truth_set/NA12878.wgs.broad_truth_set.20131119.snps_and_indels.genotypes.vcf.gz
-    wget http://ftp.ncbi.nlm.nih.gov/1000genomes/ftp/technical/working/20130806_broad_na12878_truth_set/NA12878.wgs.broad_truth_set.20131119.snps_and_indels.genotypes.vcf.gz.tbi
-    wget -O NA12878-callable.bed.gz ftp://ftp-trace.ncbi.nih.gov/giab/ftp/data/NA12878/variant_calls/NIST/union13callableMQonlymerged_addcert_nouncert_excludesimplerep_excludesegdups_excludedecoy_excludeRepSeqSTRs_noCNVs_v2.17.bed.gz
+wget ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/working/20130103_high_cov_trio_bams/NA12878/alignment/NA12878.chrom20.ILLUMINA.bwa.CEU.high_coverage.20120522.bam
+wget ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/working/20130103_high_cov_trio_bams/NA12878/alignment/NA12878.chrom20.ILLUMINA.bwa.CEU.high_coverage.20120522.bam.bai
+wget http://ftp.ncbi.nlm.nih.gov/1000genomes/ftp/technical/working/20130806_broad_na12878_truth_set/NA12878.wgs.broad_truth_set.20131119.snps_and_indels.genotypes.vcf.gz
+wget http://ftp.ncbi.nlm.nih.gov/1000genomes/ftp/technical/working/20130806_broad_na12878_truth_set/NA12878.wgs.broad_truth_set.20131119.snps_and_indels.genotypes.vcf.gz.tbi
+wget -O NA12878-callable.bed.gz ftp://ftp-trace.ncbi.nih.gov/giab/ftp/data/NA12878/variant_calls/NIST/union13callableMQonlymerged_addcert_nouncert_excludesimplerep_excludesegdups_excludedecoy_excludeRepSeqSTRs_noCNVs_v2.17.bed.gz
+```
+
+Extract chr20, and restrict out consideration to the confidently callable regions.
+
+```
+mkdir chr20
+tabix -h NA12878.wgs.broad_truth_set.20131119.snps_and_indels.genotypes.vcf.gz 20 | vcfintersect -b NA12878-callable.bed > chr20/NA12878.wgs.broad_truth_set.20131119-chr20.vcf
+bgzip chr20/NA12878.wgs.broad_truth_set.20131119-chr20.vcf
+tabix -p vcf chr20/NA12878.wgs.broad_truth_set.20131119-chr20.vcf.gz
 ```
 
