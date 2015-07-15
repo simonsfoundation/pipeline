@@ -9,6 +9,7 @@ INDIR = /mnt/scratch/$(USR)/bioppln/inputs
 OUTDIR = /mnt/scratch/$(USR)/bioppln/$(PROJ)/outputs
 LOGDIR = $(OUTDIR)
 TMPDIR = /tmp/$(USR)
+PAD = 200
 ###
 
 all: $(OUTDIR)/$(FAMCODE)-uni-mrg.bed
@@ -17,4 +18,4 @@ $(OUTDIR)/$(FAMCODE)-uni-mrg.bed: $(INDIR)/$(FAMCODE)-uni.bed
 	mkdir -p $(LOGDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	python ${SRCDIR}/bedPad.py $< $@ $(BEDOPSDIR) 0 $(LOGDIR)
+	python ${SRCDIR}/bedPad.py $< $@ $(BEDOPSDIR) $(PAD) $(LOGDIR)

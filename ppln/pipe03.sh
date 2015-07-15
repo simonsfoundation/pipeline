@@ -7,8 +7,11 @@
 # /mnt/ceph/asalomatov/SSC_Eichler/rerun/ssc11056 11056 WG 0 tmp      \
 # /nethome/asalomatov/projects/ppln/include_150607_new_cl.mk 1        \
 # ,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,SplitBam,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF, \
-# 1        
-# /path/to/pipeline/ppln
+# 1        \
+# /path/to/pipeline/ppln  \
+# 20  \
+# all 
+
 
 indir=$1         #directory with bam file(s)
 outdir=$2        #will be created, for final output and metrics
@@ -69,7 +72,6 @@ if [[ $WGregion =~ ^[1-12]+$ ]]; then
     fi
     inpd=$workdir
 fi
-exit 1
 
 if [[ $conf == *",Reorder,"* ]]; then
     make -j $P -f ${srcdir}/reordBam.mk INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
