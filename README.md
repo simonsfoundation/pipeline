@@ -18,7 +18,7 @@ a 205-family (685 exomes) collection at Simons Foundation.
    
 ### From BAM files to de novo germline mutations
 
-   - BAM file(s) is input(tested for whole exome, whole genome to come)
+   - BAM file(s) is input
    - Optionally process BAM files according to GATK best practices
    - Compute callable regions, and subdivide genome into bins of approximately
    equal size for parallelization
