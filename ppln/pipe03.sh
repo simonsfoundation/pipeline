@@ -538,7 +538,7 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
 fi
 
 if [[ $conf == *",RecalibVariants,"* ]]; then
-    make -j $P -f ${srcdir}/variantRecalibrate.mk PREFIX=11006-JHC SUFFIX=-vars.vcf.gz T=$P VARTYPE=SNP INCLMK=$inclmk INDIR=$workdir OUTDIR=$workdir LOGDIR=$outdir
+    make -j $P -f ${srcdir}/variantRecalibrate.mk PREFIX=${famcode}-JHC SUFFIX=-vars.vcf.gz T=$P VARTYPE=SNP INCLMK=$inclmk INDIR=$workdir OUTDIR=$workdir LOGDIR=$outdir
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
@@ -546,7 +546,7 @@ if [[ $conf == *",RecalibVariants,"* ]]; then
         exit 1
     fi
 
-    make -j $P -f ${srcdir}/applyRecalibration.mk PREFIX=11006-JHC SUFFIX=-vars.vcf.gz T=$P VARTYPE=SNP INCLMK=$inclmk INDIR=$workdir OUTDIR=$workdir LOGDIR=$outdir
+    make -j $P -f ${srcdir}/applyRecalibration.mk PREFIX=${famcode}-JHC SUFFIX=-vars.vcf.gz T=$P VARTYPE=SNP INCLMK=$inclmk INDIR=$workdir OUTDIR=$workdir LOGDIR=$outdir
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
@@ -554,7 +554,7 @@ if [[ $conf == *",RecalibVariants,"* ]]; then
         exit 1
     fi
 
-    make -j $P -f ${srcdir}/variantRecalibrate.mk PREFIX=11006-JHC SUFFIX=-SNP-vars.vcf.gz T=$P VARTYPE=INDEL INCLMK=$inclmk INDIR=$workdir OUTDIR=$workdir LOGDIR=$outdir
+    make -j $P -f ${srcdir}/variantRecalibrate.mk PREFIX=${famcode}-JHC SUFFIX=-SNP-vars.vcf.gz T=$P VARTYPE=INDEL INCLMK=$inclmk INDIR=$workdir OUTDIR=$workdir LOGDIR=$outdir
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
@@ -562,7 +562,7 @@ if [[ $conf == *",RecalibVariants,"* ]]; then
         exit 1
     fi
 
-    make -j $P -f ${srcdir}/applyRecalibration.mk PREFIX=11006-JHC SUFFIX=-recal-SNP-vars.vcf.gz T=$P VARTYPE=INDEL INCLMK=$inclmk INDIR=$workdir OUTDIR=$workdir LOGDIR=$outdir
+    make -j $P -f ${srcdir}/applyRecalibration.mk PREFIX=${famcode}-JHC SUFFIX=-recal-SNP-vars.vcf.gz T=$P VARTYPE=INDEL INCLMK=$inclmk INDIR=$workdir OUTDIR=$workdir LOGDIR=$outdir
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
