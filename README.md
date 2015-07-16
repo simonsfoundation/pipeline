@@ -74,7 +74,7 @@ max_cores                  \#max number of physical cpu cores to utilize
 
 ### Validation
 
-Let's test this pipeline against CEU sample NA12878. See [this](http://clavius.bc.edu/~erik/CSHL-advanced-sequencing/freebayes-tutorial.html), and [this](http://bcb.io/2014/10/07/joint-calling/) for a good exposition. 
+Let's test this pipeline against CEU sample NA12878. See [this freebayes tutorial](http://clavius.bc.edu/~erik/CSHL-advanced-sequencing/freebayes-tutorial.html), and [this bcbio blog post](http://bcb.io/2014/10/07/joint-calling/) for a good exposition. 
 
 Download chromosome 20 high coverage bam file, Broad Institute's truth set, and NIST Genome in a Bottle target regions.
 
@@ -102,13 +102,33 @@ Let use ```vcf-compare``` to gauge the concordance between our calls and the tru
 ```
 zcat NA12878.wgs.broad_truth_set.20131119-chr20.vcf.gz | grep "^#\|TruthStatus=TRUE_POSITIVE" | bgzip -c > NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz
 tabix -p vcf NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz
-
+```
+For Haplotype Caller:
+```
 vcf-compare NA12878-HC-vars-flr-call.vcf.gz ../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz | grep ^VN
 VN	1298	NA12878-HC-vars-flr-call.vcf.gz (1.7%)
 VN	1740	../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz (2.3%)
 VN	73287	../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz (97.7%)	NA12878-HC-vars-flr-call.vcf.gz (98.3%)
-'''
-
-
-
+```
+For Haplotype Caller in GVCF mode
+```
+vcf-compare NA12878-JHC-vars-call.vcf.gz ../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz | grep ^VN
+VN	1400	NA12878-JHC-vars-call.vcf.gz (1.9%)
+VN	1729	../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz (2.3%)
+VN	73298	../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz (97.7%)	NA12878-JHC-vars-call.vcf.gz (98.1%)
+```
+For Freebayes:
+```
+vcf-compare NA12878-FB-vars-call.vcf.gz ../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz | grep ^VN
+VN	445	NA12878-FB-vars-call.vcf.gz (0.6%)
+VN	3131	../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz (4.2%)
+VN	71896	../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz (95.8%)	NA12878-FB-vars-call.vcf.gz (99.4%)
+```
+For Platypus:
+```
+vcf-compare NA12878-PL-vars-call.vcf.gz ../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz | grep ^VN
+VN	2486	../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz (3.3%)
+VN	3071	NA12878-PL-vars-call.vcf.gz (4.1%)
+VN	72541	../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz (96.7%)	NA12878-PL-vars-call.vcf.gz (95.9%)
+```
 
