@@ -39,16 +39,3 @@ except Exception as e:
     logProc.logProc(outfile, outdir, ' ', 'failed', stderr_out=e.message)
     raise
 
-'''
-[2015-03-03 07:11] /bioinfo/software/installs/bcbio/bin/freebayes
--f /bioinfo/data/bcbio/genomes/Hsapiens/GRCh37/seq/GRCh37.fa
--b /tmp/asalomatov_bcbng_working_7mwA1RJkiA/bamprep/11480_fa/1/11480.fa_SSCtest-reorder-fixrgs-gatkfilter-dedup-1_0_1551236-prep.bam
--b /tmp/ asalomatov_bcbng_working_7mwA1RJkiA/bamprep/11480_mo/1/11480.mo_SSCtest-reorder-fixrgs-gatkfilter-dedup-1_0_1551236-prep.bam
--b /tmp/asalomatov_bcbng_working_7mwA1RJkiA/bamprep/11480_p1/1/11480.p1_SSCtest- reorder-fixrgs-gatkfilter-dedup-1_0_1551236-prep.bam
---ploidy 2
---targets /tmp/asalomatov_bcbng_working_7mwA1RJkiA/freebayes/1/11480- 1_0_1551236-raw-regions.bed
---min-repeat-entropy 1 --experimental-gls
-
-| /bioinfo/software/installs/bcbio/bin/vcffilter -f 'QUAL > 5' -s | /bioinfo/software/installs/bcbio/bin/vcfallelicprimitives | /bioinfo/software/installs/bcbio/bin/vcfstreamsort
-| bgzip -c > /tmp/asalomatov_bcbng_working_7mwA1RJkiA/freebayes/1/tx/tmp98nePZ/11480-1_0_1551236-raw.vcf.gz
-'''

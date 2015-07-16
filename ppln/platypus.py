@@ -1,5 +1,6 @@
 '''
-
+filtering is after
+https://github.com/chapmanb/bcbio-nextgen/blob/master/bcbio/variation/vfilter.py
 '''
 import sys, subprocess
 sys.path.insert(0, '/nethome/asalomatov/projects/ppln')

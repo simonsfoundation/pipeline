@@ -47,17 +47,3 @@ if p.returncode == 0:
 else:
     logProc.logProc(outfile, cmd, 'failed', stderr)
 
-'''
-java -Xms1g -Xmx5000m -XX:+UseSerialGC -Djava.io.
-      tmpdir=/tmp/asalomatov_bcbng_working_7mwA1RJkiA/tx/tmp0I30hq -jar /
-            bioinfo/software/installs/bcbio/share/java/picard/GenomeAnalysisTK.jar
--R /bioinfo/data/bcbio/genomes/Hsapiens/GRCh37/seq/GRCh37.fa
--I /tmp/asalomatov_bcbng_working_7mwA1RJkiA/bamprep/11480_p1/1/
-11480.p1_SSCtest-reorder-fixrgs-gatkfilter-dedup-1_0_1551236-prep.bam
--I /tmp/asalomatov_bcbng_working_7mwA1RJkiA/bamprep/11480_mo/1/11480. mo_SSCtest-reorder-fixrgs-gatkfilter-dedup-1_0_1551236-prep.bam
--I /tmp/asalomatov_bcbng_working_7mwA1RJkiA/bamprep/11480_fa/1/11480.fa_SSCtest-reorder-fixrgs-gatkfilter-dedup-1_0_1551236-prep.bam
---dbsnp /bioinfo/data/bcbio/genomes/Hsapiens/GRCh37/variation/dbsnp_138.vcf.gz
-#-L /tmp/asalomatov_bcbng_working_7mwA1RJkiA/gatk-haplotype/1/11480-1_0_1551236-raw-regions.bed
--T HaplotypeCaller
--o /tmp/asalomatov_bcbng_working_7mwA1RJkiA/gatk-haplotype/1/tx/tmpegKpSt/ 11480-1_0_1551236-raw.vcf.gz
-'''

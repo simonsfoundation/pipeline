@@ -101,19 +101,3 @@ $(OUTDIR)/%-re.bam: $(INDIR)/%.bam
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	python $(SRCDIR)/reorderBam.py $< $@ $(PICARDDIR) $(GENOMEREF) $(TMPDIR) 
-#tmnt/scratch/asalomatov/bioppln/inputs/%-re.gam: /mnt/scratch/asalomatov/bioppln/inputs/%.bam
-
-#clean:
-#	rm $(OUTPUTBAMS)
-#$(OUTPUTBAMS)) : $(INPUTBAMS))
-#	mkdir -p $(OUTDIR)
-#	mkdir -p $(TMPDIR)
-#	mkdir -p $(SCRDIR)
-#	python $(SRCDIR)/reBam.py $< $(TMPDIR) $(OUTDIR) $(PICARDDIR) $(GENOMEREF) 
-#
-#phonystats: $(OUTPUTBAMS))
-#	ll $(OUTPUTBAMS) | wc -l > phonystats
-
-
-
-#OUTPUT=/tmp/asalomatov_bcbng_working_7mwA1RJkiA/bamclean/11480_mo/tx/tmpePPsMN/11480.mo_SSCtest-re-fixrgs.bam TMP_DIR=/tmp/asalomatov_bcbng_working_7mwA1RJkiA/tx/ tmpZMLpDu

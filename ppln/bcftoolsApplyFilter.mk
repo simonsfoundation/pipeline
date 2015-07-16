@@ -1,5 +1,4 @@
 ### 
-default: all
 SHELL = /bin/bash
 USR = $(shell whoami)
 INCLMK = /nethome/asalomatov/projects/ppln/include.mk
@@ -33,5 +32,5 @@ $(OUTDIR)/%$(SUFFIX)-flr.vcf.gz: $(INDIR)/%$(SUFFIX).vcf.gz
 	mkdir -p $(LOGDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	bcftools filter -O z --soft-filter $(FILTID) -e '$(FILTER)' -m + -o $@ $<
-	tabix -p vcf $@
+	$(BCFTOOLS) filter -O z --soft-filter $(FILTID) -e '$(FILTER)' -m + -o $@ $<
+	$(TABIX) -p vcf $@

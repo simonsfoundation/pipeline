@@ -1,6 +1,6 @@
 '''
 Unite callable regions provided in bed files. Arrange in bins of roughly
-equal size -  a la bcbio - subdivide the whole genome in ~1.5mbp intervals using end points from callable regions.
+equal size
 '''
 import sys, os
 sys.path.insert(0, '/nethome/asalomatov/projects/ppln')
@@ -21,7 +21,7 @@ def checkNtvl(ci, ni):
     return 0
 
 def accumNtvl(ci, ni, w, fname):
-    '''A la bcbio-nextgen genome subdivision logic.
+    '''genome subdivision logic.
     '''
     if not ci:
         for i in ni: ci.append(i)

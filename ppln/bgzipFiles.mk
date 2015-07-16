@@ -23,4 +23,4 @@ $(OUTDIR)/%$(SUFFIX).gz: $(INDIR)/%$(SUFFIX)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
 	bgzip -f $<
-	tabix -p vcf $@
+	$(TABIX) -p vcf $@

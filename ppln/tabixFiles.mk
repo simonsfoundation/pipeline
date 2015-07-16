@@ -23,4 +23,4 @@ $(OUTDIR)/%$(SUFFIX).tbi: $(INDIR)/%$(SUFFIX)
 	mkdir -p $(LOGDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	tabix -f -p $(FILETYPE) $<
+	$(TABIX) -f -p $(FILETYPE) $<
