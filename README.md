@@ -69,7 +69,8 @@ tmp                        \ #if tmp work in /tmp, else work in output dir
 ,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF, \
 1                          \#if 1 remove working dir on exit
 /path/to/pipeline/ppln     \
-max_cores                  \#max number of physical cpu cores to utilize
+20                  \#max number of physical cpu cores to utilize
+all   # 1-12 if process only region defined in /ppln/data, all - work on full file 
 ```
 
 ### Validation
