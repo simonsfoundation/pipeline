@@ -155,35 +155,35 @@ sbatch -J CEUTrio -N 1 --exclusive ~/pipeline/ppln/pipe03.sh ./ ./CEUTrio CEUTri
 ```
 Filter out loci where the proband is HomRef, one can use ```SnpSift``` to accomplish this task.
 ```
-java -jar SnpSift.jar filter " GEN[0].GT = '0/0' " CEUTrio-FB-vars.vcf.gz | bgzip -c > CEUTrio-FB-vars-NoHomRef.vcf.gz
+java -jar SnpSift.jar filter " GEN[0].GT != '0/0' " CEUTrio-FB-vars.vcf.gz | vcfintersect -b ../../NA12878-callable.bed | bgzip -c > CEUTrio-FB-vars-NoHomRef-call.vcf.gz
 ```
 And, finally, carry out compatisons with *vcf-compare*.
 
 Haplotype Caller:
 ```
 vcf-compare GiaB_NIST_RTG_v0_2-chr20.vcf.gz CEUTrio/CEUTrio-HC-vars-NoHomRef-call.vcf.gz | grep ^VN
-VN	112	CEUTrio/CEUTrio-HC-vars-NoHomRef-call.vcf.gz (0.4%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (0.2%)
-VN	26531	CEUTrio/CEUTrio-HC-vars-NoHomRef-call.vcf.gz (99.6%)
-VN	69778	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (99.8%)
+VN	989	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (1.4%)
+VN	6511	CEUTrio/CEUTrio-HC-vars-NoHomRef-call.vcf.gz (8.6%)
+VN	68901	CEUTrio/CEUTrio-HC-vars-NoHomRef-call.vcf.gz (91.4%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (98.6%)
 ```
 Haplotype Caller GVCF:
 ```
-vcf-compare GiaB_NIST_RTG_v0_2-chr20.vcf.gz CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz | grep ^VN
-VN	137	CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz (0.5%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (0.2%)
-VN	26701	CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz (99.5%)
-VN	69753	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (99.8%)
+ vcf-compare GiaB_NIST_RTG_v0_2-chr20.vcf.gz CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz | grep ^VN
+VN	999	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (1.4%)
+VN	6182	CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz (8.2%)
+VN	68891	CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz (91.8%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (98.6%)
 ```
 Freebayes:
 ```
 vcf-compare GiaB_NIST_RTG_v0_2-chr20.vcf.gz CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz | grep ^VN
-VN	9827	CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz (44.4%)
-VN	12299	CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz (55.6%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (17.6%)
-VN	57591	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (82.4%)
+VN	13497	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (19.3%)
+VN	18212	CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz (24.4%)
+VN	56393	CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz (75.6%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (80.7%)
 ```
 Platypus:
 ```
 vcf-compare GiaB_NIST_RTG_v0_2-chr20.vcf.gz CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz | grep ^VN
-VN	124	CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz (0.5%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (0.2%)
-VN	25110	CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz (99.5%)
-VN	69766	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (99.8%)
+VN	1346	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (1.9%)
+VN	11209	CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz (14.1%)
+VN	68544	CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz (85.9%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (98.1%)
 ```
