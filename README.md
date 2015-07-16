@@ -45,7 +45,7 @@ Besides commonly present *Python 2.7, JDK, GNU make*, the following packages are
    11. [vcflib](https://github.com/ekg/vcflib)
    12. [SnpEff](http://snpeff.sourceforge.net/)
    
-All except GATK come with an install of [bcbio-nextgen](https://github.com/chapmanb/bcbio-nextgen).
+All except GATK come with an install of [bcbio-nextgen](https://github.com/chapmanb/bcbio-nextgen), an excellent resource to compare against, and to learn from.
 
 ```
 cd ~
@@ -74,6 +74,7 @@ max_cores                  \#max number of physical cpu cores to utilize
 
 ### Validation
 
+#### NA12878
 Let's test this pipeline against CEU sample NA12878. See [this freebayes tutorial](http://clavius.bc.edu/~erik/CSHL-advanced-sequencing/freebayes-tutorial.html), and [this bcbio blog post](http://bcb.io/2014/10/07/joint-calling/) for a good exposition. 
 
 Download chromosome 20 high coverage bam file, Broad Institute's truth set, and NIST Genome in a Bottle target regions.
@@ -132,3 +133,57 @@ VN	3071	NA12878-PL-vars-call.vcf.gz (4.1%)
 VN	72541	../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz (96.7%)	NA12878-PL-vars-call.vcf.gz (95.9%)
 ```
 
+#### CEU Trio
+
+After downloading chromosome 20 alignments for [NA1278, NA12891, NA12892](ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/working/20130103_high_cov_trio_bams/), and creating symbolic links:
+```
+ln -s NA12878.chrom20.ILLUMINA.bwa.CEU.high_coverage.20120522.bam CEUTrio.NA12878.chr20.20120522.bam
+ln -s NA12891.chrom20.ILLUMINA.bwa.CEU.high_coverage.20120522.bam CEUTrio.NA12891.chr20.20120522.bam
+ln -s NA12892.chrom20.ILLUMINA.bwa.CEU.high_coverage.20120522.bam CEUTrio.NA12892.chr20.20120522.bam
+ln -s NA12878.chrom20.ILLUMINA.bwa.CEU.high_coverage.20120522.bam.bai CEUTrio.NA12878.chr20.20120522.bam.bai
+ln -s NA12891.chrom20.ILLUMINA.bwa.CEU.high_coverage.20120522.bam.bai CEUTrio.NA12891.chr20.20120522.bam.bai
+ln -s NA12892.chrom20.ILLUMINA.bwa.CEU.high_coverage.20120522.bam.bai CEUTrio.NA12892.chr20.20120522.bam.bai
+```
+Download a set of high confidence calls for the trio.
+```
+wget -O GiaB_NIST_RTG_v0_2.vcf.gz ftp://ftp-trace.ncbi.nih.gov/giab/ftp/data/NA12878/variant_calls/GIAB_integration/NIST_RTG_PlatGen_merged_highconfidence_v0.2_Allannotate.vcf.gz
+tabix -f -p vcf GiaB_NIST_RTG_v0_2.vcf.gz
+```
+Run the pipeline
+```
+sbatch -J CEUTrio -N 1 --exclusive ~/pipeline/ppln/pipe03.sh ./ ./CEUTrio CEUTrio WG 0 tmp ~/pipeline/ppln/include.mk 0 ,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF,RecalibVariants, 1 ~/pipeline/ppln/ 20 all
+```
+Filter out loci where the proband is HomRef, one can use ```SnpSift``` to accomplish this task.
+```
+java -jar SnpSift.jar filter " GEN[0].GT = '0/0' " CEUTrio-FB-vars.vcf.gz | bgzip -c > CEUTrio-FB-vars-NoHomRef.vcf.gz
+```
+And, finally, carry out compatisons with *vcf-compare*.
+
+Haplotype Caller:
+```
+vcf-compare GiaB_NIST_RTG_v0_2-chr20.vcf.gz CEUTrio/CEUTrio-HC-vars-NoHomRef-call.vcf.gz | grep ^VN
+VN	112	CEUTrio/CEUTrio-HC-vars-NoHomRef-call.vcf.gz (0.4%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (0.2%)
+VN	26531	CEUTrio/CEUTrio-HC-vars-NoHomRef-call.vcf.gz (99.6%)
+VN	69778	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (99.8%)
+```
+Haplotype Caller GVCF:
+```
+vcf-compare GiaB_NIST_RTG_v0_2-chr20.vcf.gz CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz | grep ^VN
+VN	137	CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz (0.5%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (0.2%)
+VN	26701	CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz (99.5%)
+VN	69753	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (99.8%)
+```
+Freebayes:
+```
+vcf-compare GiaB_NIST_RTG_v0_2-chr20.vcf.gz CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz | grep ^VN
+VN	9827	CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz (44.4%)
+VN	12299	CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz (55.6%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (17.6%)
+VN	57591	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (82.4%)
+```
+Platypus:
+```
+vcf-compare GiaB_NIST_RTG_v0_2-chr20.vcf.gz CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz | grep ^VN
+VN	124	CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz (0.5%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (0.2%)
+VN	25110	CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz (99.5%)
+VN	69766	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (99.8%)
+```
