@@ -74,8 +74,9 @@ max_cores                  \#max number of physical cpu cores to utilize
 
 ### Validation
 
-Let's test this pipeline against CEU sample NA12878. Download chromosome 20 high
-coverage bam file, Broad Institute's truth set, and NIST Genome in a Bottle target regions.
+Let's test this pipeline against CEU sample NA12878. See [this](http://clavius.bc.edu/~erik/CSHL-advanced-sequencing/freebayes-tutorial.html), and [this](http://bcb.io/2014/10/07/joint-calling/) for a good exposition. 
+
+Download chromosome 20 high coverage bam file, Broad Institute's truth set, and NIST Genome in a Bottle target regions.
 
 ```
 wget ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/working/20130103_high_cov_trio_bams/NA12878/alignment/NA12878.chrom20.ILLUMINA.bwa.CEU.high_coverage.20120522.bam
@@ -84,13 +85,30 @@ wget http://ftp.ncbi.nlm.nih.gov/1000genomes/ftp/technical/working/20130806_broa
 wget http://ftp.ncbi.nlm.nih.gov/1000genomes/ftp/technical/working/20130806_broad_na12878_truth_set/NA12878.wgs.broad_truth_set.20131119.snps_and_indels.genotypes.vcf.gz.tbi
 wget -O NA12878-callable.bed.gz ftp://ftp-trace.ncbi.nih.gov/giab/ftp/data/NA12878/variant_calls/NIST/union13callableMQonlymerged_addcert_nouncert_excludesimplerep_excludesegdups_excludedecoy_excludeRepSeqSTRs_noCNVs_v2.17.bed.gz
 ```
+Run the pipeline.
+```
+sbatch -J NA12878 -N 1 --exclusive ~/pipeline/ppln/pipe03.sh ./ ./NA12878 NA12878 WG 0 tmp ~/pipeline/ppln/include.mk 0 ,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF,RecalibVariants, 1 ~/pipeline/ppln/ 20 all
+```
 
-Extract chr20, and restrict out consideration to the confidently callable regions.
-
+Restrict our consideration to chromosome 20, and to the confidently callable regions.
 ```
 mkdir chr20
-tabix -h NA12878.wgs.broad_truth_set.20131119.snps_and_indels.genotypes.vcf.gz 20 | vcfintersect -b NA12878-callable.bed > chr20/NA12878.wgs.broad_truth_set.20131119-chr20.vcf
-bgzip chr20/NA12878.wgs.broad_truth_set.20131119-chr20.vcf
+tabix -h NA12878.wgs.broad_truth_set.20131119.snps_and_indels.genotypes.vcf.gz 20 | vcfintersect -b NA12878-callable.bed | bgzip -c > chr20/NA12878.wgs.broad_truth_set.20131119-chr20.vcf.gz
 tabix -p vcf chr20/NA12878.wgs.broad_truth_set.20131119-chr20.vcf.gz
 ```
+Do the same to our variant calls.
+
+Let use ```vcf-compare``` to gauge the concordance between our calls and the true positives from the truth set.
+```
+zcat NA12878.wgs.broad_truth_set.20131119-chr20.vcf.gz | grep "^#\|TruthStatus=TRUE_POSITIVE" | bgzip -c > NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz
+tabix -p vcf NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz
+
+vcf-compare NA12878-HC-vars-flr-call.vcf.gz ../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz | grep ^VN
+VN	1298	NA12878-HC-vars-flr-call.vcf.gz (1.7%)
+VN	1740	../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz (2.3%)
+VN	73287	../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz (97.7%)	NA12878-HC-vars-flr-call.vcf.gz (98.3%)
+'''
+
+
+
 
