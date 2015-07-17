@@ -162,29 +162,29 @@ And, finally, carry out compatisons with *vcf-compare*.
 
 Haplotype Caller:
 ```
-vcf-compare GiaB_NIST_RTG_v0_2-chr20.vcf.gz CEUTrio/CEUTrio-HC-vars-NoHomRef-call.vcf.gz | grep ^VN
-VN	989	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (1.4%)
-VN	6511	CEUTrio/CEUTrio-HC-vars-NoHomRef-call.vcf.gz (8.6%)
-VN	68901	CEUTrio/CEUTrio-HC-vars-NoHomRef-call.vcf.gz (91.4%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (98.6%)
+vcf-compare CEUTrio/CEUTrio-HC-vars-NoHomRef-call.vcf.gz GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz  | grep ^VN
+VN  456 GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz (0.7%)
+VN  5978    CEUTrio/CEUTrio-HC-vars-NoHomRef-call.vcf.gz (7.9%)
+VN  69434   CEUTrio/CEUTrio-HC-vars-NoHomRef-call.vcf.gz (92.1%) GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz (99.3%)
 ```
 Haplotype Caller GVCF:
 ```
- vcf-compare GiaB_NIST_RTG_v0_2-chr20.vcf.gz CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz | grep ^VN
-VN	999	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (1.4%)
-VN	6182	CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz (8.2%)
-VN	68891	CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz (91.8%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (98.6%)
+vcf-compare CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz  | grep ^VN
+VN  470 GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz (0.7%)
+VN  5653    CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz (7.5%)
+VN  69420   CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz (92.5%) GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz (99.3%)
 ```
 Freebayes:
 ```
 vcf-compare CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz  | grep ^VN
-VN  819 GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz (1.2%)
-VN  7079    CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz (9.3%)
-VN  69071   CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz (90.7%) GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz (98.8%)
+VN  791 GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz (1.1%)
+VN  3784    CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz (5.2%)
+VN  69099   CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz (94.8%) GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz (98.9%)
 ```
 Platypus:
 ```
-vcf-compare GiaB_NIST_RTG_v0_2-chr20.vcf.gz CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz | grep ^VN
-VN	1346	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (1.9%)
-VN	11209	CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz (14.1%)
-VN	68544	CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz (85.9%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (98.1%)
+vcf-compare CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz  | grep ^VN
+VN  857 GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz (1.2%)
+VN  7769    CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz (10.1%)
+VN  69033   CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz (89.9%) GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz (98.8%)
 ```
