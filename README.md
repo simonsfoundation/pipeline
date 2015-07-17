@@ -156,7 +156,7 @@ sbatch -J CEUTrio -N 1 --exclusive ~/pipeline/ppln/pipe03.sh ./ ./CEUTrio CEUTri
 ```
 Filter out loci where the proband is HomRef, one can use ```SnpSift``` to accomplish this task.
 ```
-java -jar SnpSift.jar filter " GEN[0].GT != '0/0' " CEUTrio-FB-vars.vcf.gz | vcfintersect -b ../../NA12878-callable.bed | bgzip -c > CEUTrio-FB-vars-NoHomRef-call.vcf.gz
+vt normalize -r $GENOMEREF CEUTrio-FB-vars.vcf.gz | java -jar SnpSift.jar filter " GEN[0].GT != '0/0' & GEN[0].GT != '0|0' " | vcfintersect -b ../../NA12878-callable.bed | bgzip -c > CEUTrio-FB-vars-NoHomRef-call.vcf.gz
 ```
 And, finally, carry out compatisons with *vcf-compare*.
 
