@@ -136,7 +136,7 @@ VN	72541	../NA12878.wgs.broad_truth_set.20131119-chr20-TRUE_POS.vcf.gz (96.7%)	N
 
 #### CEU Trio
 
-After downloading chromosome 20 alignments for [NA1278, NA12891, NA12892](ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/working/20130103_high_cov_trio_bams/), and creating symbolic links:
+After downloading chromosome 20 alignments for [NA1278, NA12891, NA12892](http://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/working/20130103_high_cov_trio_bams/), and creating symbolic links:
 ```
 ln -s NA12878.chrom20.ILLUMINA.bwa.CEU.high_coverage.20120522.bam CEUTrio.NA12878.chr20.20120522.bam
 ln -s NA12891.chrom20.ILLUMINA.bwa.CEU.high_coverage.20120522.bam CEUTrio.NA12891.chr20.20120522.bam
