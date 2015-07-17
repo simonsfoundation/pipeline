@@ -176,10 +176,10 @@ VN	68891	CEUTrio/CEUTrio-JHC-vars-NoHomRef-call.vcf.gz (91.8%)	GiaB_NIST_RTG_v0_
 ```
 Freebayes:
 ```
-vcf-compare GiaB_NIST_RTG_v0_2-chr20.vcf.gz CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz | grep ^VN
-VN	13497	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (19.3%)
-VN	18212	CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz (24.4%)
-VN	56393	CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz (75.6%)	GiaB_NIST_RTG_v0_2-chr20.vcf.gz (80.7%)
+vcf-compare CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz  | grep ^VN
+VN  819 GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz (1.2%)
+VN  7079    CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz (9.3%)
+VN  69071   CEUTrio/CEUTrio-FB-vars-NoHomRef-call.vcf.gz (90.7%) GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz (98.8%)
 ```
 Platypus:
 ```
