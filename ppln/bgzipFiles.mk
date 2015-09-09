@@ -2,7 +2,7 @@
 default: all
 SHELL = /bin/bash
 USR = $(shell whoami)
-include /nethome/asalomatov/projects/ppln/include.mk
+include /nethome/asalomatov/projects/pipeline/ppln/include.mk
 ### may override on cl
 FAMCODE = 1
 SUFFIX = .vcf
@@ -13,6 +13,7 @@ LOGDIR = $(OUTDIR)
 TMPDIR = /tmp/$(USR)/$(PROJ)
 ###
 inFiles = $(wildcard $(INDIR)/$(FAMCODE)*$(SUFFIX))
+$(info $(inFiles))
 o0 = $(addprefix $(OUTDIR)/, $(patsubst %$(SUFFIX),%$(SUFFIX).gz,$(notdir $(inFiles))))
 $(info $(o0))
 
