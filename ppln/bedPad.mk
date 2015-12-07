@@ -9,7 +9,7 @@ INDIR = /mnt/scratch/$(USR)/bioppln/inputs
 OUTDIR = /mnt/scratch/$(USR)/bioppln/$(PROJ)/outputs
 LOGDIR = $(OUTDIR)
 TMPDIR = /tmp/$(USR)
-PAD = 200
+PAD = 0
 ###
 
 all: $(OUTDIR)/$(FAMCODE)-uni-mrg.bed

@@ -7,7 +7,7 @@ a single sample, or in a familial cohort (typically a trio, or a quad). It is a
 full-featured, and scalable pipeline that is simple, and modular in its design.
 Almost every step in the pipeline is done via a *Makefile* (GNU make). These
 makefiles can be used on their own to accomplish common bioinformatics operations, or
-they can be stung together in a shell script to compose a pipeline. *pipeline*
+they can be stung together in a shell script to compose a pipeline. *pipeline*                                 u
 is well suited for processing large number of familiar cohorts, and has been deployed on
 a 205-family (685 exomes) collection at Simons Foundation.
 
@@ -60,7 +60,7 @@ Running it:
 ~/pipeline/ppln/pipe03     \
 /path/to/input/bams/       \ #dir with bam file(s)
 /path/to/output/dir        \ #will be created, for final output, metrics, log. 
-familycode                 \ #124 if bams are 123.p1.bam, 123.fa.bam, 123.mo.bam
+amilycode                 \ #124 if bams are 123.p1.bam, 123.fa.bam, 123.mo.bam
 WG                         \ #binning method EX, WG(recommended)
 0                          \ #if not 1 recompute bins, else use existing ones - for testing
 tmp                        \ #if tmp work in /tmp, else work in output dir
@@ -187,4 +187,4 @@ vcf-compare CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz GiaB_NIST_RTG_v0_2-chr2
 VN  857 GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz (1.2%)
 VN  7769    CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz (10.1%)
 VN  69033   CEUTrio/CEUTrio-PL-vars-NoHomRef-call.vcf.gz (89.9%) GiaB_NIST_RTG_v0_2-chr20-norm.vcf.gz (98.8%)
-```
+`,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF,``

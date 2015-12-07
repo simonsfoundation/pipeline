@@ -1,9 +1,10 @@
 ### some variables ####################################################
 SRCDIR = ~/projects/pipeline/ppln
-JAVA = /usr/java/jdk1.7.0_65/bin/java
+JAVA = /usr/bin/java
 GAPS = /mnt/scratch/asalomatov/data/hg19/gap_corr23.bed
 PICARDDIR = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/share/java/picard-1.96
-GENOMEREF = /mnt/xfs1/bioinfoCentos7/data/bcbio_nextgen/150617/genomes/Hsapiens/GRCh37/seq/GRCh37.fa
+#GENOMEREF = /mnt/xfs1/bioinfoCentos7/data/bcbio_nextgen/150617/genomes/Hsapiens/GRCh37/seq/GRCh37.fa
+GENOMEREF = /mnt/xfs1/bioinfo/data/bcbio_nextgen/150607/genomes/Hsapiens/GRCh37/seq/GRCh37.fa
 GATK = /mnt/xfs1/bioinfo/software/builds/GATK/fromGitZip150607/gatk-protected-master/target/executable/GenomeAnalysisTK.jar
 DBSNP = /mnt/xfs1/bioinfo/data/bcbio_nextgen/150607/genomes/Hsapiens/GRCh37/variation/dbsnp_138.vcf.gz
 BEDTLSDIR = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin
@@ -24,7 +25,8 @@ SNP1000G = /mnt/scratch/asalomatov/data/b37/1000G_phase1.snps.high_confidence.b3
 MILLSINDEL = /mnt/scratch/asalomatov/data/b37/Mills_and_1000G_gold_standard.indels.b37.vcf
 SNPEFFJAR = /mnt/xfs1/bioinfo/software/installs/bcbio_nextgen/150607/Cellar/snpeff/4.1g/libexec/snpEff.jar 
 SNPSIFTJAR = /mnt/xfs1/bioinfo/software/installs/bcbio_nextgen/150607/Cellar/snpeff/4.1g/libexec/SnpSift.jar
-SNPEFFCONF = /mnt/scratch/asalomatov/data/b37/snpEff/snpEff.config
+SNPEFFCONF = /mnt/scratch/asalomatov/data/snpEff/snpEff.config
 SNPEFFGENOME = GRCh37.75
+DBNSFP = /mnt/scratch/asalomatov/data/dbNSFP/hg19/dbNSFP3.0_hg19_sorted.txt.gz
 #######################################################################
 #/mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin

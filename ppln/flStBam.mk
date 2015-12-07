@@ -1,5 +1,5 @@
 ### 
-default: all
+#default: all
 SHELL = /bin/bash
 USR = $(shell whoami)
 INCLMK = /nethome/asalomatov/projects/ppln/include.mk
