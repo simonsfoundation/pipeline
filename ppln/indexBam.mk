@@ -1,22 +1,28 @@
 ### 
-default: all
+#default: all
 SHELL = /bin/bash
+ifdef SLURMMASTER
+	SHELL=srun
+	.SHELLFLAGS= -N1 --cpus-per-task=1 bash -c 
+endif
+$(info $(SHELL))
 USR = $(shell whoami)
-INCLMK = /nethome/asalomatov/projects/ppln/include.mk
+INCLMK = 
 include $(INCLMK)
 ### may override on cl
-FAMCODE = 1
-SUFFIX = -fxgr
+FAMCODE = 
+SUFFIX = 
 PROJ = mktest
-INDIR = /mnt/scratch/$(USR)/bioppln/inputs
-OUTDIR = /mnt/scratch/$(USR)/bioppln/$(PROJ)/outputs
+INDIR = .
+OUTDIR = .
 LOGDIR = $(OUTDIR)
 TMPDIR = /tmp/$(USR)/$(PROJ)
 ###
 inBam = $(wildcard $(INDIR)/$(FAMCODE)*$(SUFFIX).bam)
-$(info $(inBam))
+#$(info $(inBam))
 o0 = $(addprefix $(OUTDIR)/, $(patsubst %$(SUFFIX).bam,%$(SUFFIX).bam.bai,$(notdir $(inBam))))
-$(info $(o0))
+#$(info $(o0))
+.DELETE_ON_ERROR:
 
 all: $(o0)
 
@@ -24,5 +30,5 @@ $(OUTDIR)/%$(SUFFIX).bam.bai: $(INDIR)/%$(SUFFIX).bam
 	mkdir -p $(LOGDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	$(SAMBAMBA) index -t 4 $<
+	$(SAMBAMBA) index -t 3 $<
 #	python $(SRCDIR)/indexBam.py $< $@ $(SAMBAMBA) $(LOGDIR)
