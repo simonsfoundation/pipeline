@@ -1,30 +1,33 @@
 '''
 Runs picard's AddOrReplaceReadGroups on a reordered bam file.
 '''
-
 import sys, os, subprocess, time, datetime, re
+import yaml
 sys.path.insert(0, '/nethome/asalomatov/projects/ppln')
 import logProc
 
-inbam, outbam, picarddir, tmpdir, outdir = sys.argv[1:]
+inbam, outbam, picarddir, tmpdir, outdir, bam2sample_id_yaml = sys.argv[1:]
 addOrReplaceReadGroups = os.path.join(os.path.abspath(picarddir), 'AddOrReplaceReadGroups.jar')
 inbam_basename = os.path.basename(inbam)
 print 'inbam_basename', inbam_basename
-fam_name = re.search('^\w+', inbam_basename).group()
-s = re.search (fam_name+'.\w+', inbam_basename)
+with open(bam2sample_id_yaml, 'r') as f:
+    bam2smpl = yaml.safe_load(f)
+#fam_name = re.search('^\w+', inbam_basename).group()
+#s = re.search (fam_name+'.\w+', inbam_basename)
 #if s is None:
 #    s = re.search ('\d+\.\w\w', inbam_basename)
 #if s is None:
 #    sys.exit('Could not find expected pattern in ' + inbam_basename)
-sample_id = s.group()
+#sample_id = s.group()
+sample_id = str(bam2smpl[inbam_basename])
 print 'sample_id', sample_id
 
 
-VALIDATION_STRINGENCY = 'SILENT' #SILENT STRICT
-SORT_ORDER = 'coordinate' 
-RGID = sample_id #'1' 
+VALIDATION_STRINGENCY = 'SILENT'  # SILENT STRICT
+SORT_ORDER = 'coordinate'
+RGID = sample_id
 RGLB = 'unknown'
-RGPL = 'illumina' 
+RGPL = 'illumina'
 RGPU = sample_id
 RGSM = sample_id
 

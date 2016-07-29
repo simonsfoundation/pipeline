@@ -26,7 +26,7 @@ try:
 #    cmd = "%(platypus)s callVariants %(inbams)s --output=%(outfile)s --refFile=%(refGenome)s --regions=%(inregions)s "
 #    cmd = "%(platypus)s callVariants %(inbams)s --output=%(outfile)s --refFile=%(refGenome)s --regions=%(inregions)s %(options)s "
 #--output=%(outfile)s 
-    cmd = "python %(platypus)s callVariants %(inbams)s --output=- --refFile=%(refGenome)s --regions=%(inregions)s %(options)s "
+    cmd = "%(platypus)s callVariants %(inbams)s --output=- --refFile=%(refGenome)s --regions=%(inregions)s %(options)s "
     cmd += "| %(bcftools)s filter -O v --soft-filter 'PlatQualDepth' -e '(FR[0] <= 0.5 && TC < 4 && %%QUAL < 20) || (TC < 13 && %%QUAL < 10) ||      (FR[0] > 0.5 && TC < 4 && %%QUAL < 50)' -m '+' | %(vcflibdir)s/vcfallelicprimitives --keep-geno | %(vcflibdir)s/vcfstreamsort | %(bgzip)s -c > %(outfile)s"
     print cmd
     cmd = cmd % locals()

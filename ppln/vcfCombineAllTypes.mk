@@ -20,8 +20,8 @@ outFile := $(OUTDIR)/$(PREFIX)-flr.vcf
 $(info $(outFile))
 #inFiles += $(wildcard $(INDIR)/$(PREFIX)*-raw-indels$(SUFFIX).vcf.gz)
 $(info $(inFiles))
-tempFile = $(OUTDIR)/$(FAMCODE)-varsflrtemp.vcf
-targ = $(OUTDIR)/$(FAMCODE)-vars-flr.vcf
+tempFile = $(OUTDIR)/$(PREFIX)-varsflrtemp.vcf
+targ = $(OUTDIR)/$(PREFIX)-vars-flr.vcf
 
 all: $(outFile)
 

@@ -23,9 +23,14 @@ inclmk=$7        #makefile with variable definition
 cleanup=$8       #if 0 dont delete intermediate files
 conf=$9          #comma surrounded list of unordered instructions
 rm_work_dir=${10} #if 1 remove working dir on exit 
-srcdir=${11}      #dir with scripts, eg ~/pipeline/ppln
+srcdir=${11}      
+                  #dir with scripts, eg ~/pipeline/ppln
 max_cores=${12}   #max physical cpu cores to utilize
 WGregion=${13}
+
+echo 'all arguments:'
+echo $@
+
 echo "config is $conf"
 
 sfx=

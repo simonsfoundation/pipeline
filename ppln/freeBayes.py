@@ -1,3 +1,4 @@
+
 '''
 
 '''
@@ -14,18 +15,12 @@ try:
     inbams = ''
     for f in sys.argv[N:]:
         inbams += fl + f
-    if 'v0.9.21-7' in subprocess.Popen([freebayes], stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]:
-        options = ''' \
-        --ploidy 2 \
-        --min-repeat-entropy 1'''
-    else:
-        options = ''' \
-        --ploidy 2 \
-        --min-repeat-entropy 1 \
-        --experimental-gls '''
+    options = ''' \
+    --ploidy 2 \
+    --min-repeat-entropy 1'''
 
     cmd = "%(freebayes)s %(inbams)s -f %(refGenome)s --targets %(inbed)s %(options)s "
-    cmd += "| %(vcflibdir)s/vcffilter -f 'QUAL > 6' -s | %(vcflibdir)s/vcfallelicprimitives | %(vcflibdir)s/vcfstreamsort | %(bgzip)s -c > %(outfile)s"
+    cmd += "| %(vcflibdir)s/vcffilter -f 'QUAL > 5' -s | %(vcflibdir)s/vcfallelicprimitives | %(vcflibdir)s/vcfstreamsort | %(bgzip)s -c > %(outfile)s"
     cmd = cmd % locals()
     print cmd
     logProc.logProc(outfile, outdir, cmd, 'started')
