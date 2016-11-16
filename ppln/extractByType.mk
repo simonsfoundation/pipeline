@@ -2,15 +2,15 @@
 default: all
 SHELL = /bin/bash
 USR = $(shell whoami)
-INCLMK = /nethome/asalomatov/projects/ppln/include.mk
+INCLMK = ~/projects/pipeline/ppln/include.mk
 include $(INCLMK)
 ### may override on cl
 PREFIX =
 SUFFIX =
 VARTYPE = snps# snps|indels|mnps|other -  can be multiple comma-separated selection
 PROJ = mktest
-INDIR = ./
-OUTDIR = ./
+INDIR = .
+OUTDIR = .
 LOGDIR = $(OUTDIR)
 TMPDIR = /tmp/$(USR)/$(PROJ)
 ###

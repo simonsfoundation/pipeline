@@ -447,7 +447,8 @@ if [[ $conf == *",HaplotypeCaller,"* ]]; then
         exit 1
     fi
 
-    cp -p ${workdir}/${famcode}-HC-vars-flr.vcf.gz* ${outdir}/
+    cp -p ${workdir}/${famcode}-HC-vars-flr.vcf.gz ${outdir}/${famcode}-HC-vars.vcf.gz
+    cp -p ${workdir}/${famcode}-HC-vars-flr.vcf.gz.tbi ${outdir}/${famcode}-HC-vars.vcf.gz.tbi
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
@@ -533,7 +534,50 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
         exit 1
     fi
 
-    cp -p ${workdir}/${famcode}-JHC-vars.vcf.gz* ${outdir}/
+    make -f ${srcdir}/extractByType.mk INCLMK=$inclmk VARTYPE=indels SUFFIX=-vars PREFIX=$famcode-JHC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo 'extractByType.mk INCLMK=$inclmk VARTYPE=indels finished with errors'
+        exit 1
+    fi
+
+    make -f ${srcdir}/extractByType.mk INCLMK=$inclmk VARTYPE=snps SUFFIX=-vars PREFIX=$famcode-JHC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo 'extractByType.mk INCLMK=$inclmk VARTYPE=snps finished with errors'
+        exit 1
+    fi
+
+    make -f ${srcdir}/bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=snps PREFIX=$famcode-JHC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir 
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo 'bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=snps finished with errors'
+        exit 1
+    fi
+
+    make -f ${srcdir}/bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=indels PREFIX=$famcode-JHC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir 
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo 'bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=indels finished with errors'
+        exit 1
+    fi
+
+    make -f ${srcdir}/vcfCombineAllTypes.mk INCLMK=$inclmk SUFFIX=-flr PREFIX=$famcode-JHC-vars INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir 
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo 'vcfCombineAllTypes.mk INCLMK=$inclmk finished with errors'
+        exit 1
+    fi
+
+
+#    cp -p ${workdir}/${famcode}-JHC-vars.vcf.gz* ${outdir}/
+    cp -p ${workdir}/${famcode}-JHC-vars-flr.vcf.gz ${outdir}/${famcode}-JHC-vars.vcf.gz
+    cp -p ${workdir}/${famcode}-JHC-vars-flr.vcf.gz.tbi ${outdir}/${famcode}-JHC-vars.vcf.gz.tbi
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then

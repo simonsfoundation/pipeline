@@ -1,15 +1,17 @@
 ### some variables ####################################################
 SRCDIR = ~/projects/pipeline/ppln
-JAVA = /usr/bin/java
+JAVA = /mnt/xfs1/home/ifisk/java/jdk1.8.0_11/bin/java
 GAPS = /mnt/scratch/asalomatov/data/hg19/gap_corr23.bed
 BCBIODIR = /mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617
 TOOLSDIR = /mnt/xfs1/home/asalomatov/projects/dnanexus/installs
 #PICARDDIR = $(BCBIODIR)/share/java/picard-1.96
 PICARDDIR = /bioinfo/software/installs/picard/git # $(TOOLSDIR)/bin/picard
+PICARD = $(TOOLSDIR)/bin/picard
 #GENOMEREF = $(TOOLSDIR)/genomes/Hsapiens/GRCh37/seq/GRCh37.fa
 #GENOMEREF = $(TOOLSDIR)/bcbio/genomes/Hsapiens/GRCh37/seq/GRCh37.fa
 GENOMEREF = /mnt/xfs1/bioinfoCentos7/data/bcbio_nextgen/150617/genomes/Hsapiens/GRCh37/seq/GRCh37.fa
-GATK = /mnt/xfs1/bioinfo/software/builds/GATK/fromGitZip150607/gatk-protected-master/target/executable/GenomeAnalysisTK.jar
+#GATK = /mnt/xfs1/bioinfo/software/builds/GATK/fromGitZip150607/gatk-protected-master/target/executable/GenomeAnalysisTK.jar
+GATK = /mnt/xfs1/bioinfoCentos7/software/installs/GATK/3.6/GenomeAnalysisTK.jar
 DBSNP = /mnt/scratch/asalomatov/data/b37/dbsnp_138.b37.vcf
 BEDTLSDIR = $(TOOLSDIR)/bin
 SAMTOOLS = $(TOOLSDIR)/bin/samtools
@@ -31,8 +33,10 @@ SNPEFFJAR = $(BCBIODIR)/Cellar/snpeff/4.1g/libexec/snpEff.jar
 SNPSIFTJAR = $(BCBIODIR)/Cellar/snpeff/4.1g/libexec/SnpSift.jar
 SNPEFFCONF = /mnt/scratch/asalomatov/data/snpEff/snpEff.config
 SNPEFFGENOME = GRCh37.75
-DBNSFP = /mnt/scratch/asalomatov/data/dbNSFP/hg19/dbNSFP3.0_hg19_sorted.txt.gz
+#DBNSFP = /mnt/scratch/asalomatov/data/dbNSFP/hg19/dbNSFP3.0_hg19_sorted.txt.gz
+DBNSFP = /mnt/scratch/asalomatov/data/dbNSFP/dbNSFPv3.2a/dbNSFP3.2_hg19_fix.txt.gz
 DBSPIDEX = /mnt/scratch/asalomatov/data/spidex/spidex_public_noncommercial_v1_0.vcf.gz
-BAM2SMPL = /mnt/scratch/asalomatov/data/SPARK/info/bam2smpl.yml
+#BAM2SMPL = /mnt/xfs1/home/asalomatov/projects/VIP/info/bam2smpl.yml
+BAM2SMPL = /mnt/scratch/asalomatov/data/SPARK/info/baylor_bam2sp_descr.yml
 #######################################################################
 #/mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin
