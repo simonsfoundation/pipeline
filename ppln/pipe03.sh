@@ -147,7 +147,7 @@ if [[ $conf == *",DedupBam,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo 'copying dedupMetrics failed'
-        exit 1
+        # exit 1
     fi
     if [ $cleanup -ne 0 ]; then
         rm ${workdir}/*-flr.bam*
@@ -201,7 +201,7 @@ ret=$?
 echo $ret
 if [ $ret -ne 0 ]; then
     echo 'copying copying genome coverage bed failed'
-    exit 1
+    # exit 1
 fi
 
 make -j $P -f ${srcdir}/filter23Bed.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
@@ -227,7 +227,7 @@ ret=$?
 echo $ret
 if [ $ret -ne 0 ]; then
     echo 'copying *-irr.bam failed'
-    exit 1
+    # exit 1
 fi
 
 make -j $P -f ${srcdir}/indexBam.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
@@ -257,7 +257,7 @@ ret=$?
 echo $ret
 if [ $ret -ne 0 ]; then
     echo 'copying callable loci summary failed'
-    exit 1
+    # exit 1
 fi
 
 make -j $P -f ${srcdir}/filterCallNoCall.mk INCLMK=$inclmk PREFIX=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir SUFFIX=-cloc
@@ -273,7 +273,7 @@ ret=$?
 echo $ret
 if [ $ret -ne 0 ]; then
     echo 'copying call/nocall bed failed'
-    exit 1
+    # exit 1
 fi
 
 if [[ $conf == *",IndelRealign,"* ]]; then
@@ -366,7 +366,7 @@ if [[ $skip_binbam -ne 1 ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo 'copying *-uni-mrg.bed failed'
-        exit 1
+        # exit 1
     fi
 fi
 
@@ -453,7 +453,7 @@ if [[ $conf == *",HaplotypeCaller,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo "copying ${famcode}-HC-vars-flr.vcf.gz failed"
-        exit 1
+        # exit 1
     fi
 fi
 
@@ -479,7 +479,7 @@ if [[ $conf == *",Freebayes,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo "copying ${famcode}-FB-vars.vcf.gz failed"
-        exit 1
+        # exit 1
     fi
 fi
 
@@ -505,7 +505,7 @@ if [[ $conf == *",Platypus,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo "copying ${famcode}-PL-vars.vcf.gz failed"
-        exit 1
+        # exit 1
     fi
 fi
 
@@ -582,7 +582,7 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo "copying ${famcode}-JHC-vars.vcf.gz failed"
-        exit 1
+        # exit 1
     fi
 fi
 
@@ -624,7 +624,7 @@ if [[ $conf == *",RecalibVariants,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo "copying ${famcode}-JHC-recal-vars.vcf.gz failed"
-        exit 1
+        # exit 1
     fi
 fi
 
