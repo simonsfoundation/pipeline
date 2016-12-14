@@ -23,4 +23,4 @@ $(OUTDIR)/%$(SUFFIX)-fxgr.bam: $(INDIR)/%$(SUFFIX).bam
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	python $(SRCDIR)/addOrReplaceReadGroups.py $< $@ $(PICARDDIR) $(TMPDIR) $(LOGDIR) $(BAM2SMPL)
+	python $(SRCDIR)/addOrReplaceReadGroups.py $< $@ $(PICARD) $(TMPDIR) $(LOGDIR) $(BAM2SMPL)
