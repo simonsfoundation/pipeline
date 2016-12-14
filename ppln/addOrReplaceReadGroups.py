@@ -24,7 +24,7 @@ RGPU = sample_id
 RGSM = sample_id
 
 #cmd = 'java -Xms750m -Xmx4000m -XX:+UseSerialGC -jar '+addOrReplaceReadGroups+' INPUT=%(inbam)s OUTPUT=%(outbam)s SORT_ORDER=%(SORT_ORDER)s RGID=%(RGID)s RGLB=%(RGLB)s RGPL=%(RGPL)s RGPU=%(RGPU)s RGSM=%(RGSM)s TMP_DIR=%(tmpdir)s VALIDATION_STRINGENCY=%(VALIDATION_STRINGENCY)s'
-cmd = '%(picard)s addOrReplaceReadGroups INPUT=%(inbam)s OUTPUT=%(outbam)s SORT_ORDER=%(SORT_ORDER)s RGID=%(RGID)s RGLB=%(RGLB)s RGPL=%(RGPL)s RGPU=%(RGPU)s RGSM=%(RGSM)s TMP_DIR=%(tmpdir)s VALIDATION_STRINGENCY=%(VALIDATION_STRINGENCY)s'
+cmd = '%(picard)s AddOrReplaceReadGroups INPUT=%(inbam)s OUTPUT=%(outbam)s SORT_ORDER=%(SORT_ORDER)s RGID=%(RGID)s RGLB=%(RGLB)s RGPL=%(RGPL)s RGPU=%(RGPU)s RGSM=%(RGSM)s TMP_DIR=%(tmpdir)s VALIDATION_STRINGENCY=%(VALIDATION_STRINGENCY)s'
 cmd = cmd % locals()
 print cmd
 logProc.logProc(outbam, outdir, cmd, 'started')
