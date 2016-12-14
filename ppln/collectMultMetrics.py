@@ -6,8 +6,8 @@ import sys, os, subprocess
 sys.path.insert(0, '/nethome/asalomatov/projects/ppln')
 import logProc
 
-inbam, outf, picarddir, genomeRef, outdir = sys.argv[1:]
-progr = os.path.join(os.path.abspath(picarddir), 'CollectMultipleMetrics.jar')
+inbam, outf, picard, genomeRef, outdir = sys.argv[1:]
+#progr = os.path.join(os.path.abspath(picarddir), 'CollectMultipleMetrics.jar')
 
 
 VALIDATION_STRINGENCY = 'SILENT' #SILENT STRICT
@@ -17,7 +17,8 @@ PROGRAM2 = 'QualityScoreDistribution'
 PROGRAM3 = 'MeanQualityByCycle' 
 
 
-cmd = 'java -Xms750m -Xmx4000m -XX:+UseSerialGC -jar '+progr+' INPUT=%(inbam)s OUTPUT=%(outf)s PROGRAM=%(PROGRAM0)s PROGRAM=%(PROGRAM1)s PROGRAM=%(PROGRAM2)s PROGRAM=%(PROGRAM3)s R=%(genomeRef)s VALIDATION_STRINGENCY=%(VALIDATION_STRINGENCY)s'
+#cmd = 'java -Xms750m -Xmx4000m -XX:+UseSerialGC -jar '+progr+' INPUT=%(inbam)s OUTPUT=%(outf)s PROGRAM=%(PROGRAM0)s PROGRAM=%(PROGRAM1)s PROGRAM=%(PROGRAM2)s PROGRAM=%(PROGRAM3)s R=%(genomeRef)s VALIDATION_STRINGENCY=%(VALIDATION_STRINGENCY)s'
+cmd = '%(picard)s CollectMultipleMetrics INPUT=%(inbam)s OUTPUT=%(outf)s PROGRAM=%(PROGRAM0)s PROGRAM=%(PROGRAM1)s PROGRAM=%(PROGRAM2)s PROGRAM=%(PROGRAM3)s R=%(genomeRef)s VALIDATION_STRINGENCY=%(VALIDATION_STRINGENCY)s'
 cmd = cmd % locals()
 print cmd
 logProc.logProc(outf, outdir, cmd, 'started')

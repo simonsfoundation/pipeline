@@ -24,5 +24,5 @@ $(OUTDIR)/%$(SUFFIX).bam.met: $(INDIR)/%$(SUFFIX).bam
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	python $(SRCDIR)/collectMultMetrics.py $< $@ $(PICARDDIR) $(GENOMEREF) $(LOGDIR)
+	python $(SRCDIR)/collectMultMetrics.py $< $@ $(PICARD) $(GENOMEREF) $(LOGDIR)
 

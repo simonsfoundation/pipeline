@@ -13,9 +13,10 @@ import sys, os, subprocess, time, datetime
 sys.path.insert(0, '/nethome/asalomatov/projects/ppln')
 import logProc
 
-inbam, outbam, picarddir, refGenome, tmpdir, outdir = sys.argv[1:]
-reorderSam = os.path.join(os.path.abspath(picarddir), 'ReorderSam.jar')
-cmd = 'java -Xms750m -Xmx4000m -XX:+UseSerialGC -jar '+reorderSam+' INPUT=%(inbam)s OUTPUT=%(outbam)s REFERENCE=%(refGenome)s ALLOW_INCOMPLETE_DICT_CONCORDANCE=%(ALLOW_INCOMPLETE_DICT_CONCORDANCE)s TMP_DIR=%(tmpdir)s VALIDATION_STRINGENCY=%(VALIDATION_STRINGENCY)s'
+inbam, outbam, picard, refGenome, tmpdir, outdir = sys.argv[1:]
+#reorderSam = os.path.join(os.path.abspath(picarddir), 'ReorderSam.jar')
+#cmd = 'java -Xms750m -Xmx4000m -XX:+UseSerialGC -jar '+reorderSam+' INPUT=%(inbam)s OUTPUT=%(outbam)s REFERENCE=%(refGenome)s ALLOW_INCOMPLETE_DICT_CONCORDANCE=%(ALLOW_INCOMPLETE_DICT_CONCORDANCE)s TMP_DIR=%(tmpdir)s VALIDATION_STRINGENCY=%(VALIDATION_STRINGENCY)s'
+cmd = '%(picard)s ReorderSam INPUT=%(inbam)s OUTPUT=%(outbam)s REFERENCE=%(refGenome)s ALLOW_INCOMPLETE_DICT_CONCORDANCE=%(ALLOW_INCOMPLETE_DICT_CONCORDANCE)s TMP_DIR=%(tmpdir)s VALIDATION_STRINGENCY=%(VALIDATION_STRINGENCY)s'
 cmd = cmd % locals()
 #print cmd
 logProc.logProc(outbam, outdir, cmd, 'started')

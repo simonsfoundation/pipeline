@@ -24,4 +24,4 @@ $(OUTDIR)/%$(SUFFIX).bam.GcBmet: $(INDIR)/%$(SUFFIX).bam
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	python $(SRCDIR)/collectGcBiasMetrics.py $< $@ $(PICARDDIR) $(GENOMEREF) $(LOGDIR)
+	python $(SRCDIR)/collectGcBiasMetrics.py $< $@ $(PICARD) $(GENOMEREF) $(LOGDIR)

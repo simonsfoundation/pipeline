@@ -1,7 +1,7 @@
 ### 
 SHELL = /bin/bash
 USR = $(shell whoami)
-INCLMK = /nethome/asalomatov/projects/ppln/include.mk
+INCLMK = ~/projects/pipeline/ppln/include.mk
 include $(INCLMK)
 ### may override on cl
 FAMCODE = 1
@@ -23,4 +23,4 @@ $(OUTDIR)/%$(SUFFIX)-re.bam: $(INDIR)/%$(SUFFIX).bam
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	python $(SRCDIR)/reorderBam.py $< $@ $(PICARDDIR) $(GENOMEREF) $(TMPDIR) $(LOGDIR)
+	python $(SRCDIR)/reorderBam.py $< $@ $(PICARD) $(GENOMEREF) $(TMPDIR) $(LOGDIR)

@@ -24,4 +24,4 @@ $(OUTDIR)/%$(SUFFIX)-dp.bam: $(INDIR)/%$(SUFFIX).bam
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	python $(SRCDIR)/dedupBam.py $< $@ $(PICARDDIR) $(LOGDIR)
+	python $(SRCDIR)/dedupBam.py $< $@ $(PICARD) $(LOGDIR)
