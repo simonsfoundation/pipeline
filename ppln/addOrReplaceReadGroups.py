@@ -7,7 +7,7 @@ sys.path.insert(0, '~/projects/pipeline/ppln')
 import logProc
 
 inbam, outbam, picard, tmpdir, outdir, bam2sample_id_yaml = sys.argv[1:]
-i#addOrReplaceReadGroups = os.path.join(os.path.abspath(picarddir), 'AddOrReplaceReadGroups.jar')
+#addOrReplaceReadGroups = os.path.join(os.path.abspath(picarddir), 'AddOrReplaceReadGroups.jar')
 inbam_basename = os.path.basename(inbam)
 print 'inbam_basename', inbam_basename
 with open(bam2sample_id_yaml, 'r') as f:
