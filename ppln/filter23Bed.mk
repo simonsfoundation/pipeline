@@ -25,3 +25,4 @@ $(OUTDIR)/%$(SUFFIX)-23.bed: $(INDIR)/%$(SUFFIX).bed
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
 	python $(SRCDIR)/filter23.py $< $@ $(LOGDIR)
+	rm $<

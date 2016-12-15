@@ -12,6 +12,7 @@ INDIR = /mnt/scratch/$(USR)/bioppln/inputs
 OUTDIR = /mnt/scratch/$(USR)/bioppln/$(PROJ)/outputs
 LOGDIR = $(OUTDIR)
 TMPDIR = /tmp/$(USR)/$(PROJ)
+RMINPUT = NO
 ###
 inBam = $(wildcard $(INDIR)/$(FAMCODE)*$(SUFFIX).bam)
 $(info $(inBam))
@@ -20,8 +21,18 @@ $(info $(o0))
 
 all: $(o0)
 
+ifeq ($(RMINPUT),YES)
 $(OUTDIR)/%$(SUFFIX)-flr.bam: $(INDIR)/%$(SUFFIX).bam $(INDIR)/%$(SUFFIX).bam.bai
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
 	python $(SRCDIR)/gatkPrintReads.py $^ $@ $(GATK) $(GENOMEREF) $(TMPDIR) $(LOGDIR)
+	rm $^
+else
+$(OUTDIR)/%$(SUFFIX)-flr.bam: $(INDIR)/%$(SUFFIX).bam $(INDIR)/%$(SUFFIX).bam.bai
+	mkdir -p $(OUTDIR)
+	mkdir -p $(TMPDIR)
+	mkdir -p $(OUTDIR)
+	python $(SRCDIR)/gatkPrintReads.py $^ $@ $(GATK) $(GENOMEREF) $(TMPDIR) $(LOGDIR)
+endif
+

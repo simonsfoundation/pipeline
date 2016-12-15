@@ -1,16 +1,17 @@
 ### 
 SHELL = /bin/bash
 USR = $(shell whoami)
-INCLMK = /nethome/asalomatov/projects/ppln/include.mk
+INCLMK = ~/projects/pipeline/ppln/include.mk
 include $(INCLMK)
 ### may override on cl
 FAMCODE = 1
-SUFFIX = -re
+SUFFIX = 
 PROJ = mktest
-INDIR = /mnt/scratch/$(USR)/bioppln/inputs
-OUTDIR = /mnt/scratch/$(USR)/bioppln/$(PROJ)/outputs
+INDIR = 
+OUTDIR = 
 LOGDIR = $(OUTDIR)
 TMPDIR = /tmp/$(USR)/$(PROJ)
+RMINPUT = NO
 ###
 inBam = $(wildcard $(INDIR)/$(FAMCODE)*$(SUFFIX).bam)
 $(info $(inBam))
@@ -19,8 +20,18 @@ $(info $(o0))
 
 all: $(o0)
 
+ifeq ($(RMINPUT),YES)
 $(OUTDIR)/%$(SUFFIX)-fxgr.bam: $(INDIR)/%$(SUFFIX).bam
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
 	python $(SRCDIR)/addOrReplaceReadGroups.py $< $@ $(PICARD) $(TMPDIR) $(LOGDIR) $(BAM2SMPL)
+	rm $<*
+else
+$(OUTDIR)/%$(SUFFIX)-fxgr.bam: $(INDIR)/%$(SUFFIX).bam
+	mkdir -p $(OUTDIR)
+	mkdir -p $(TMPDIR)
+	mkdir -p $(OUTDIR)
+	python $(SRCDIR)/addOrReplaceReadGroups.py $< $@ $(PICARD) $(TMPDIR) $(LOGDIR) $(BAM2SMPL)
+endif
+

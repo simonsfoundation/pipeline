@@ -7,10 +7,11 @@ include $(INCLMK)
 FAMCODE = 1
 SUFFIX = 
 PROJ = mktest
-INDIR = /mnt/scratch/$(USR)/bioppln/inputs
-OUTDIR = /mnt/scratch/$(USR)/bioppln/$(PROJ)/outputs
+INDIR = 
+OUTDIR = 
 LOGDIR = $(OUTDIR)
 TMPDIR = /tmp/$(USR)/$(PROJ)
+RMINPUT = NO
 ###
 inBam = $(wildcard $(INDIR)/$(FAMCODE)*$(SUFFIX).bam)
 $(info $(inBam))
@@ -19,8 +20,18 @@ $(info $(o0))
 
 all: $(o0)
 
+ifeq ($(RMINPUT),YES)
 $(OUTDIR)/%$(SUFFIX)-re.bam: $(INDIR)/%$(SUFFIX).bam
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
 	python $(SRCDIR)/reorderBam.py $< $@ $(PICARD) $(GENOMEREF) $(TMPDIR) $(LOGDIR)
+	rm $<*
+else
+$(OUTDIR)/%$(SUFFIX)-re.bam: $(INDIR)/%$(SUFFIX).bam
+	mkdir -p $(OUTDIR)
+	mkdir -p $(TMPDIR)
+	mkdir -p $(OUTDIR)
+	python $(SRCDIR)/reorderBam.py $< $@ $(PICARD) $(GENOMEREF) $(TMPDIR) $(LOGDIR)
+endif
+

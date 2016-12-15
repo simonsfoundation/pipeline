@@ -20,7 +20,7 @@ try:
     --min-repeat-entropy 1'''
 
     cmd = "%(freebayes)s %(inbams)s -f %(refGenome)s --targets %(inbed)s %(options)s "
-    cmd += "| %(vcflibdir)s/vcffilter -f 'QUAL > 5' -s | %(vcflibdir)s/vcfallelicprimitives | %(vcflibdir)s/vcfstreamsort | %(bgzip)s -c > %(outfile)s"
+    cmd += "| %(vcflibdir)s/vcffilter -f 'QUAL > 5' -F 'QUALlt5' -s | %(vcflibdir)s/vcfallelicprimitives | %(vcflibdir)s/vcfstreamsort | %(bgzip)s -c > %(outfile)s"
     cmd = cmd % locals()
     print cmd
     logProc.logProc(outfile, outdir, cmd, 'started')

@@ -23,4 +23,4 @@ all: $(outBed)
 
 $(OUTDIR)/%$(SUFFIX)-cloc.bed: $(OUTDIR)/%$(SUFFIX).bam $(OUTDIR)/%$(SUFFIX).bed
 	python $(SRCDIR)/gatkCallableLoci.py $^ $@ $(GENOMEREF) $(TMPDIR) $(GATK) $(LOGDIR)
-
+	rm $(word 2,$^)

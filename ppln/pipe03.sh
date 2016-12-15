@@ -27,6 +27,7 @@ srcdir=${11}
                   #dir with scripts, eg ~/pipeline/ppln
 max_cores=${12}   #max physical cpu cores to utilize
 WGregion=${13}
+remove_input_bams=${14} #YES to remove
 
 echo 'all arguments:'
 echo $@
@@ -78,29 +79,13 @@ if [[ $WGregion =~ ^[1-12]+$ ]]; then
     inpd=$workdir
 fi
 
-if [[ $conf == *",Reorder,"* ]]; then
-    make -j $P -f ${srcdir}/reordBam.mk INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
-    ret=$?
-    echo $ret
-    if [ $ret -ne 0 ]; then
-        echo "reordBam.mk INCLMK=$inclmk finished with errors"
-        exit 1
-    fi
-    sfx='-re'
-    prevsfx=$sfx
-    inpd=$workdir
-fi
-
 if [[ $conf == *",FixGroups,"* ]]; then
-    make -j $P -f ${srcdir}/fxgrBam.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
+    make -j $P -f ${srcdir}/fxgrBam.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir RMINPUT=$remove_input_bams
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
         echo "fxgrBam.mk INCLMK=$inclmk finished with errors"
         exit 1
-    fi
-    if [ $cleanup -ne 0 ]; then
-        rm ${workdir}/*-re.bam*
     fi
     sfx='-fxgr'
     prevsfx=$sfx
@@ -112,27 +97,43 @@ if [[ $conf == *",FixGroups,"* ]]; then
         echo "indexBam.mk INCLMK=$inclmk finished with errors"
         exit 1
     fi
+    sfx='-fxgr'
+    prevsfx=$sfx
+    inpd=$workdir
 fi
 
 
+if [[ $conf == *",Reorder,"* ]]; then
+    make -j $P -f ${srcdir}/reordBam.mk INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir RMINPUT=$cleanup
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo "reordBam.mk INCLMK=$inclmk finished with errors"
+        exit 1
+    fi
+    sfx='-re'
+    prevsfx=$sfx
+    inpd=$workdir
+fi
+
 if [[ $conf == *",FilterBam,"* ]]; then
-    make -j $P -f ${srcdir}/flrBam.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
+    make -j $P -f ${srcdir}/flrBam.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir RMINPUT=$cleanup
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
         echo "flrBam.mk INCLMK=$inclmk finished with errors"
         exit 1
     fi
-    if [ $cleanup -ne 0 ]; then
-        rm ${workdir}/*-fxgr.bam*
-    fi
+#    if [ $cleanup -ne 0 ]; then
+#        rm ${workdir}/*-fxgr.bam*
+#    fi
     sfx='-flr'
     prevsfx=$sfx
     inpd=$workdir
 fi
 
 if [[ $conf == *",DedupBam,"* ]]; then
-    make -j $P -f ${srcdir}/dedupBam.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
+    make -j $P -f ${srcdir}/dedupBam.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir RMINPUT=$cleanup
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
@@ -142,16 +143,16 @@ if [[ $conf == *",DedupBam,"* ]]; then
     sfx='-dp'
     prevsfx=$sfx
     inpd=$workdir
-    cp -p ${workdir}/*.dedupMetrics ${metricsdir}/
+    mv ${workdir}/*.dedupMetrics ${metricsdir}/
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
-        echo 'copying dedupMetrics failed'
+        echo 'moving dedupMetrics failed'
         # exit 1
     fi
-    if [ $cleanup -ne 0 ]; then
-        rm ${workdir}/*-flr.bam*
-    fi
+#    if [ $cleanup -ne 0 ]; then
+#        rm ${workdir}/*-flr.bam*
+#    fi
 
     make -j $P -f ${srcdir}/indexBam.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
     ret=$?
@@ -197,6 +198,7 @@ if [ $ret -ne 0 ]; then
     exit 1
 fi
 cp -p ${workdir}/*.bed ${metricsdir}/
+ls ${metricsdir}/*.bed | xargs -n1 -P10 bgzip 
 ret=$?
 echo $ret
 if [ $ret -ne 0 ]; then
@@ -212,7 +214,7 @@ if [ $ret -ne 0 ]; then
     exit 1
 fi
 
-make -j $P -f ${srcdir}/filter23Bam.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
+make -j $P -f ${srcdir}/filter23Bam.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir RMINPUT=$cleanup
 ret=$?
 echo $ret
 if [ $ret -ne 0 ]; then
@@ -222,13 +224,13 @@ fi
 sfx='-23'
 prevsfx=$sfx
 
-cp -p ${workdir}/*-irr.bam ${outdir}/
-ret=$?
-echo $ret
-if [ $ret -ne 0 ]; then
-    echo 'copying *-irr.bam failed'
+#cp -p ${workdir}/*-irr.bam ${outdir}/
+#ret=$?
+#echo $ret
+#if [ $ret -ne 0 ]; then
+#    echo 'copying *-irr.bam failed'
     # exit 1
-fi
+#fi
 
 make -j $P -f ${srcdir}/indexBam.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
 ret=$?
@@ -237,8 +239,8 @@ if [ $ret -ne 0 ]; then
     echo 'indexBam.mk INCLMK=$inclmk finished with errors'
     exit 1
 fi
-if [ $cleanup -ne 0 ]; then
-    rm ${workdir}/*-dp.bam*
+if [ "$cleanup" == "YES" ]; then
+#    rm ${workdir}/*-dp.bam*
     rm ${workdir}/*-irr.bam*
 fi
 
@@ -252,11 +254,11 @@ if [ $ret -ne 0 ]; then
     exit 1
 fi
 
-cp -p ${workdir}/*.summary ${metricsdir}/
+mv ${workdir}/*.summary ${metricsdir}/
 ret=$?
 echo $ret
 if [ $ret -ne 0 ]; then
-    echo 'copying callable loci summary failed'
+    echo 'moving callable loci summary failed'
     # exit 1
 fi
 
@@ -268,13 +270,13 @@ if [ $ret -ne 0 ]; then
     echo "filterCallNoCall.mk INCLMK=$inclmk finished with errors"
     exit 1
 fi
-cp -p ${workdir}/*call.bed ${outdir}/
-ret=$?
-echo $ret
-if [ $ret -ne 0 ]; then
-    echo 'copying call/nocall bed failed'
+#cp -p ${workdir}/*call.bed ${outdir}/
+#ret=$?
+#echo $ret
+#if [ $ret -ne 0 ]; then
+#    echo 'copying call/nocall bed failed'
     # exit 1
-fi
+#fi
 
 if [[ $conf == *",IndelRealign,"* ]]; then
     make -j $P -f ${srcdir}/realTargCreator.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
@@ -313,7 +315,7 @@ if [[ $conf == *",BQRecalibrate,"* ]]; then
         echo "printBqsrReads.mk INCLMK=$inclmk finished with errors"
         exit 1
     fi
-    if [ $cleanup -ne 0 ]; then
+    if [ "$cleanup" == "YES" ]; then
         rm ${workdir}/*-rlgn.bam*
     fi
     sfx='-rclb'
@@ -332,6 +334,9 @@ if [[ $skip_binbam -ne 1 ]]; then
     if [ $ret -ne 0 ]; then
         echo "${srcdir}/bedUnion.py finished with an error."
         exit 1
+    fi
+    if [ "$cleanup" == "YES" ]; then
+        rm $inpbeds
     fi
     make -j $P -f ${srcdir}/bedPad.mk INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
     ret=$?
@@ -360,14 +365,14 @@ if [[ $skip_binbam -ne 1 ]]; then
             exit 1
         fi
     fi
-    mkdir -p ${outdir}/bed
-    cp -p ${workdir}/*-uni-mrg.bed ${outdir}/bed
-    ret=$?
-    echo $ret
-    if [ $ret -ne 0 ]; then
-        echo 'copying *-uni-mrg.bed failed'
+#    mkdir -p ${outdir}/bed
+#    cp -p ${workdir}/*-uni-mrg.bed ${outdir}/bed
+#    ret=$?
+#    echo $ret
+#    if [ $ret -ne 0 ]; then
+#        echo 'copying *-uni-mrg.bed failed'
         # exit 1
-    fi
+#    fi
 fi
 
 if [[ $conf == *",SplitBam,"* ]]; then

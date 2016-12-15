@@ -27,3 +27,4 @@ $(OUTDIR)/%-call.bed: $(INDIR)/%$(SUFFIX).bed
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
 	python $(SRCDIR)/filterCallNoCall.py $< $@ $(LOGDIR) $(FILTER1) $(FILTER2) $(FILTER3)
+	rm $<

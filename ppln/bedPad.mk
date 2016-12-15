@@ -19,3 +19,4 @@ $(OUTDIR)/$(FAMCODE)-uni-mrg.bed: $(INDIR)/$(FAMCODE)-uni.bed
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
 	python ${SRCDIR}/bedPad.py $< $@ $(BEDOPSDIR) $(PAD) $(LOGDIR)
+	rm $<
