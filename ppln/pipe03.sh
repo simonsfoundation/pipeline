@@ -468,7 +468,7 @@ if [[ $conf == *",Freebayes,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo 'callFreebayes.mk INCLMK=$inclmk finished with errors'
-        exit 1
+        #exit 1
     fi
 
     make -j $P -f ${srcdir}/vcfConcat.mk INCLMK=$inclmk FAMCODE=${famcode}-FB INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir SUFFIX=-bin.vcf.gz
@@ -476,7 +476,7 @@ if [[ $conf == *",Freebayes,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo "picMergeVcf.mk INCLMK=$inclmk FB finished with errors"
-        exit 1
+        #exit 1
     fi
 
     cp -p ${workdir}/${famcode}-FB-vars.vcf.gz* ${outdir}/
@@ -494,7 +494,7 @@ if [[ $conf == *",Platypus,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo "callPlatypus.mk INCLMK=$inclmk finished with errors"
-        exit 1
+        #exit 1
     fi
 
     make -j $P -f ${srcdir}/vcfConcat.mk INCLMK=$inclmk FAMCODE=${famcode}-PL INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir SUFFIX=-bin.vcf.gz
@@ -528,7 +528,7 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo "genotypeGVCFs.mk INCLMK=$inclmk finished with errors"
-        exit 1
+        #exit 1
     fi
 
     make -j $P -f ${srcdir}/picMergeVcf.mk INCLMK=$inclmk FAMCODE=${famcode}-JHC INDIR=$workdir OUTDIR=$workdir LOGDIR=$outdir SUFFIX=-bin.vcf.gz
@@ -536,7 +536,7 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo "picMergeVcf.mk INCLMK=$inclmk JHC finished with errors"
-        exit 1
+        #exit 1
     fi
 
     make -f ${srcdir}/extractByType.mk INCLMK=$inclmk VARTYPE=indels SUFFIX=-vars PREFIX=$famcode-JHC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
@@ -544,7 +544,7 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo 'extractByType.mk INCLMK=$inclmk VARTYPE=indels finished with errors'
-        exit 1
+        #exit 1
     fi
 
     make -f ${srcdir}/extractByType.mk INCLMK=$inclmk VARTYPE=snps SUFFIX=-vars PREFIX=$famcode-JHC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
@@ -552,7 +552,7 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo 'extractByType.mk INCLMK=$inclmk VARTYPE=snps finished with errors'
-        exit 1
+        #exit 1
     fi
 
     make -f ${srcdir}/bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=snps PREFIX=$famcode-JHC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir 
@@ -560,7 +560,7 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo 'bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=snps finished with errors'
-        exit 1
+        #exit 1
     fi
 
     make -f ${srcdir}/bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=indels PREFIX=$famcode-JHC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir 
@@ -568,7 +568,7 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo 'bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=indels finished with errors'
-        exit 1
+        #exit 1
     fi
 
     make -f ${srcdir}/vcfCombineAllTypes.mk INCLMK=$inclmk SUFFIX=-flr PREFIX=$famcode-JHC-vars INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir 
@@ -576,7 +576,7 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
     echo $ret
     if [ $ret -ne 0 ]; then
         echo 'vcfCombineAllTypes.mk INCLMK=$inclmk finished with errors'
-        exit 1
+        #exit 1
     fi
 
 
