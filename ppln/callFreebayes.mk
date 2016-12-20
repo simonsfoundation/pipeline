@@ -25,6 +25,7 @@ $(eval dep2 = $(wildcard $(INDIR)/$(FAMCODE)*$(SUFFIX).bam))
 
 $(targ): $(dep1) $(dep2)
 	python $(SRCDIR)/freeBayes.py $(GENOMEREF) $(FREEBAYES) $(VCFLIBDIR) $(BGZIP) $(LOGDIR) $$@ $$^
+	tabix -f -p vcf $$@
 	vt uniq -o $$@-u.vcf.gz $$@
 	tabix -p vcf $$@-u.vcf.gz
 	vt decompose -o $$@-d.vcf.gz $$@-u.vcf.gz
@@ -37,7 +38,7 @@ $(targ): $(dep1) $(dep2)
 	rm $$@-d.vcf.gz*
 	rm $$@-n.vcf.gz*
 	rm $$@-s.vcf.gz*
-	$(TABIX) -f -p vcf $$@
+	tabix -f -p vcf $$@
 
 endef      
 #$(info $(targ))
@@ -51,6 +52,7 @@ $(eval dep2 = $(wildcard $(INDIR)/$(FAMCODE)*-$(1)$(SUFFIX).bam))
 
 $(targ): $(dep1) $(dep2)
 	python $(SRCDIR)/freeBayes.py $(GENOMEREF) $(FREEBAYES) $(VCFLIBDIR) $(BGZIP) $(LOGDIR) $$@ $$^
+	tabix -f -p vcf $$@
 	mkdir -p $$@-u
 	vt uniq -o $$@-u/$$@ $$@
 	mkdir $$@-d
@@ -64,7 +66,7 @@ $(targ): $(dep1) $(dep2)
 	rm $$@-d.vcf.gz
 	rm $$@-n.vcf.gz
 	rm $$@-s.vcf.gz
-	$(TABIX) -f -p vcf $$@
+	tabix -f -p vcf $$@
 
 endef      
 #$(info $(targ))
