@@ -17,7 +17,11 @@ LOGDIR = $(OUTDIR)
 TMPDIR = /tmp/$(USR)/$(PROJ)
 ###
 inFile = $(wildcard $(INDIR)/*$(SUFFIX).bed)
+$(info $(inFile))
+$(info $(OUTDIR))
+$(info $(INDIR))
 callBed = $(addprefix $(OUTDIR)/, $(patsubst %$(SUFFIX).bed,%-call.bed,$(notdir $(inFile))))
+$(info $(callBed))
 #nocallBed = $(addprefix $(OUTDIR)/, $(patsubst %$(SUFFIX).bed,%-nocall.bed,$(notdir $(inFile))))
 
 all: $(callBed)

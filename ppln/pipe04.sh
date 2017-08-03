@@ -1,4 +1,4 @@
-#!/bin/bash                
+#!/bin/bash
 
 ### bam cleaning, parallelization, and variant callers
 # submit to cluster
@@ -10,7 +10,7 @@
 # 1        \
 # /path/to/pipeline/ppln  \
 # 20  \
-# all 
+# all
 
 
 indir=$1         #directory with bam file(s)
@@ -19,11 +19,11 @@ famcode=$3       #1, if bams are 1.p1.bam, 1.fa.bam, 1.mo.bam
 binbam_method=$4 #EX, WG(recommended)
 skip_binbam=$5   #if not 1 recompute bins, else use existing ones - for testing
 working_dir=$6   #tmp to work in /tmp, else work in outdir
-inclmk=$7        #makefile with variable definition 
+inclmk=$7        #makefile with variable definition
 cleanup=$8       #if 0 dont delete intermediate files
 conf=$9          #comma surrounded list of unordered instructions
-rm_work_dir=${10} #if 1 remove working dir on exit 
-srcdir=${11}      
+rm_work_dir=${10} #if 1 remove working dir on exit
+srcdir=${11}
                   #dir with scripts, eg ~/pipeline/ppln
 max_cores=${12}   #max physical cpu cores to utilize
 WGregion=${13}
@@ -38,12 +38,12 @@ sfx=
 inpd=$indir
 split_chr="True"
 Nfiles=50
-if [ "$working_dir" = "tmp" -o "$working_dir" = "TMP" ] 
+if [ "$working_dir" = "tmp" -o "$working_dir" = "TMP" ]
 then
     workdir=$(mktemp -d /tmp/${USER}_working_${famcode}_XXXXXXXXXX)
 else
-#    workdir=$outdir
-    workdir=${outdir}/work
+    workdir=$outdir
+    # workdir=${outdir}/work
 fi
 
 function cleanup {
@@ -200,7 +200,7 @@ if [[ $conf == *",filter23,"* ]]; then
         exit 1
     fi
     cp -p ${workdir}/*.bed ${metricsdir}/
-    ls ${metricsdir}/*.bed | xargs -n1 -P10 bgzip 
+    ls ${metricsdir}/*.bed | xargs -n1 -P10 bgzip
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
@@ -431,7 +431,7 @@ if [[ $conf == *",HaplotypeCaller,"* ]]; then
         exit 1
     fi
 
-    make -f ${srcdir}/bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=snps PREFIX=$famcode-HC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir 
+    make -f ${srcdir}/bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=snps PREFIX=$famcode-HC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
@@ -439,7 +439,7 @@ if [[ $conf == *",HaplotypeCaller,"* ]]; then
         exit 1
     fi
 
-    make -f ${srcdir}/bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=indels PREFIX=$famcode-HC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir 
+    make -f ${srcdir}/bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=indels PREFIX=$famcode-HC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
@@ -447,7 +447,7 @@ if [[ $conf == *",HaplotypeCaller,"* ]]; then
         exit 1
     fi
 
-    make -f ${srcdir}/vcfCombineAllTypes.mk INCLMK=$inclmk SUFFIX=-flr PREFIX=$famcode-HC-vars INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir 
+    make -f ${srcdir}/vcfCombineAllTypes.mk INCLMK=$inclmk SUFFIX=-flr PREFIX=$famcode-HC-vars INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
@@ -569,7 +569,7 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
         #exit 1
     fi
 
-    make -f ${srcdir}/bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=snps PREFIX=$famcode-JHC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir 
+    make -f ${srcdir}/bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=snps PREFIX=$famcode-JHC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
@@ -577,7 +577,7 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
         #exit 1
     fi
 
-    make -f ${srcdir}/bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=indels PREFIX=$famcode-JHC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir 
+    make -f ${srcdir}/bcftoolsApplyFilter.mk INCLMK=$inclmk VARTYPE=indels PREFIX=$famcode-JHC INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
@@ -585,7 +585,7 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
         #exit 1
     fi
 
-    make -f ${srcdir}/vcfCombineAllTypes.mk INCLMK=$inclmk SUFFIX=-flr PREFIX=$famcode-JHC-vars INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir 
+    make -f ${srcdir}/vcfCombineAllTypes.mk INCLMK=$inclmk SUFFIX=-flr PREFIX=$famcode-JHC-vars INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
     ret=$?
     echo $ret
     if [ $ret -ne 0 ]; then
@@ -606,7 +606,7 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
     bamfiles=$(ls ${workdir}/*.bam)
     ls ${workdir}/*bin.g.vcf | xargs -n1 -P $P bgzip
     ls ${workdir}/*bin.g.vcf.gz | xargs -n1 -P $P tabix -p vcf
-    for bf in $bamfiles 
+    for bf in $bamfiles
     do
         echo $bf
         bn="${bf%.*}"

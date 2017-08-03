@@ -25,6 +25,8 @@ $(eval dep2 = $(wildcard $(INDIR)/$(FAMCODE)*$(SUFFIX).bam))
 
 $(targ): $(dep1) $(dep2)
 	python $(SRCDIR)/platypus.py $(GENOMEREF) $(PLATYPUS) $(VCFLIBDIR) $(BCFTOOLS) $(BGZIP) $(LOGDIR) $$@ $$^
+	(bcftools view -h $$@; bcftools view -H $$@ | sort -V -k1,2) | bgzip -c > $$@-sort.vcf.gz
+	mv -f $$@-sort.vcf.gz $$@
 	tabix -f -p vcf $$@
 	vt uniq -o $$@-u.vcf.gz $$@
 	tabix -p vcf $$@-u.vcf.gz
@@ -50,6 +52,7 @@ $(eval dep2 = $(wildcard $(INDIR)/$(FAMCODE)*-$(1)$(SUFFIX).bam))
 
 $(targ): $(dep1) $(dep2)
 	python $(SRCDIR)/platypus.py $(GENOMEREF) $(PLATYPUS) $(VCFLIBDIR) $(BCFTOOLS) $(BGZIP) $(LOGDIR) $$@ $$^
+	(bcftools view -h $$@; bcftools view -H $$@ | sort -V -k1,2) | bgzip -c > $$@-sort.vcf.gz
 	tabix -f -p vcf $$@
 	vt uniq -o $$@-u.vcf.gz $$@
 	tabix -p vcf $$@-u.vcf.gz

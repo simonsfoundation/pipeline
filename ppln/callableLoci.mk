@@ -2,7 +2,7 @@
 #default: all
 SHELL = /bin/bash
 USR = $(shell whoami)
-INCLMK = /nethome/asalomatov/projects/ppln/include.mk
+INCLMK = ~/projects/pipeline/ppln/include.mk
 include $(INCLMK)
 ### may override on cl
 PREFIX = 1
@@ -16,11 +16,19 @@ TMPDIR = /tmp/$(USR)/$(PROJ)
 
 inBam = $(wildcard $(INDIR)/$(PREFIX)*$(SUFFIX).bam)
 $(info $(inBam))
-inBed = $(patsubst %$(SUFFIX).bam,%$(SUFFIX).bed,$(inBam))
-outBed = $(addprefix $(OUTDIR)/, $(patsubst %$(SUFFIX).bed,%$(SUFFIX)-cloc.bed,$(notdir $(inBed))))
+#inBed = $(patsubst %$(SUFFIX).bam,%$(SUFFIX).bed,$(inBam))
+outBed = $(addprefix $(OUTDIR)/, $(patsubst %$(SUFFIX).bam,%$(SUFFIX)-cloc.bed,$(notdir $(inBam))))
+$(info $(outBed))
 
 all: $(outBed)
 
-$(OUTDIR)/%$(SUFFIX)-cloc.bed: $(OUTDIR)/%$(SUFFIX).bam $(OUTDIR)/%$(SUFFIX).bed
-	python $(SRCDIR)/gatkCallableLoci.py $^ $@ $(GENOMEREF) $(TMPDIR) $(GATK) $(LOGDIR)
-	rm $(word 2,$^)
+$(OUTDIR)/%$(SUFFIX)-cloc.bed: $(INDIR)/%$(SUFFIX).bam
+	mkdir -p $(OUTDIR)
+	mkdir -p $(LOGDIR)
+	python $(SRCDIR)/gatkCallableLoci.py $< $(REGIONSBED) $@ $(GENOMEREF) $(TMPDIR) $(GATK) $(LOGDIR)
+
+#$(OUTDIR)/%$(SUFFIX)-cloc.bed: $(INDIR)/%$(SUFFIX).bam
+#	mkdir -p $(OUTDIR)
+#	mkdir -p $(LOGDIR)
+#	python $(SRCDIR)/gatkCallableLoci.py $< $@ $(GENOMEREF) $(TMPDIR) $(GATK) $(LOGDIR)
+

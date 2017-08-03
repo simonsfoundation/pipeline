@@ -7,8 +7,10 @@ import logProc
 
 print '\nsys.args   :', sys.argv[1:]
 inbam, inbed, outfile, refGenome, tmpdir, gatk, outdir = sys.argv[1:]
+#inbam, outfile, refGenome, tmpdir, gatk, outdir = sys.argv[1:]
 mysummary = outfile + '.summary'
 cmd = 'java -Xms750m -Xmx10g -XX:+UseSerialGC -Djava.io.tmpdir=%(tmpdir)s -jar %(gatk)s -T CallableLoci -I %(inbam)s -L %(inbed)s -o %(outfile)s -R %(refGenome)s -summary %(mysummary)s'
+#cmd = 'java -Xms750m -Xmx10g -XX:+UseSerialGC -Djava.io.tmpdir=%(tmpdir)s -jar %(gatk)s -T CallableLoci -I %(inbam)s -o %(outfile)s -R %(refGenome)s -summary %(mysummary)s'
 cmd = cmd % locals()
 print cmd
 logProc.logProc(outfile, outdir, cmd, 'started')

@@ -24,4 +24,4 @@ $(OUTDIR)/%$(SUFFIX)-rlgn.bam: $(INDIR)/%$(SUFFIX).bam $(INDIR)/%$(SUFFIX).bam.i
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	python $(SRCDIR)/gatkIndelRealigner.py $^ $@ $(GENOMEREF) $(TMPDIR) $(GATK) $(LOGDIR)
+	python $(SRCDIR)/gatkIndelRealigner.py $^ $@ $(GENOMEREF) $(MILLSINDEL) $(TMPDIR) $(GATK) $(LOGDIR)

@@ -11,7 +11,7 @@ INDIR = .
 OUTDIR = .
 LOGDIR = $(OUTDIR)
 TMPDIR = /tmp/$(USR)
-T = 20
+T = 4
 ###
 inFile = $(wildcard $(INDIR)/$(PREFIX)*$(SUFFIX))
 $(info $(inFile))
@@ -26,12 +26,12 @@ $(recalFile): $(inFile)
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	$(JAVA) -Xmx256G -jar $(GATK) \
+	$(JAVA) -Xmx20G -jar $(GATK) \
 		    -T VariantRecalibrator \
 			-R $(GENOMEREF) \
 			-input $< \
 			-resource:hapmap,known=false,training=true,truth=true,prior=15.0 $(HAPMAP) \
-			-resource:omni,known=false,training=true,truth=true,prior=12.0 $(OMNI) \
+			-resource:omni,known=false,training=true,truth=false,prior=12.0 $(OMNI) \
 			-resource:1000G,known=false,training=true,truth=false,prior=10.0 $(SNP1000G) \
 			-resource:dbsnp,known=true,training=false,truth=false,prior=2.0 $(DBSNP) \
 			-an DP \

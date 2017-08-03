@@ -23,7 +23,7 @@ $(outFile): $(inFile)
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	$(JAVA) -Xmx5G -jar $(SNPSIFTJAR) annotate -id -c $(SNPEFFCONF) -dbsnp $< | \
+	$(JAVA) -Xmx5G -jar $(SNPSIFTJAR) annotate $(DBSNP) -nolog $< | \
 		$(JAVA) -Xmx5G -jar $(SNPEFFJAR) ann -c $(SNPEFFCONF) $(SNPEFFGENOME) -v -s $(sumFile) | \
 		$(BGZIP) -c > $@
 	$(TABIX) -f -p vcf $@
