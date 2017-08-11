@@ -14,7 +14,6 @@ a 205-family (685 exomes) collection at Simons Foundation.
 ### Cluster environments
    - Grid Engine
    - Slurm
-   - Amazon (to come)
    
 ### From BAM files to de novo germline mutations
 
@@ -49,7 +48,7 @@ All except GATK come with an install of [bcbio-nextgen](https://github.com/chapm
 
 ```
 cd ~
-git clone https://github.com/asalomatov/pipeline.git
+git clone https://github.com/simonsfoundation/pipeline.git
 ```
 
 Next step is to edit *include.mk* defining *Makefile* variables to reflect your setup.
@@ -57,20 +56,26 @@ Next step is to edit *include.mk* defining *Makefile* variables to reflect your 
 Running it:
 
 ```
-~/pipeline/ppln/pipe03     \
+~/pipeline/ppln/pipe03.sh     \
 /path/to/input/bams/       \ #dir with bam file(s)
 /path/to/output/dir        \ #will be created, for final output, metrics, log. 
-amilycode                 \ #124 if bams are 123.p1.bam, 123.fa.bam, 123.mo.bam
+familycode                 \ #124 if bams are 123.p1.bam, 123.fa.bam, 123.mo.bam
 WG                         \ #binning method EX, WG(recommended)
-0                          \ #if not 1 recompute bins, else use existing ones - for testing
+0                          \ #set to 0, if set to 1 wil use existing regions - for testing
 tmp                        \ #if tmp work in /tmp, else work in output dir
 ~/pipeline/ppln/include.mk \ #makefile with variable definition
-1                          \ #if 0 don't delete intermediate files
+YES                         \ #if YES/NO - delete/don't delete intermediate files
 ,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF, \
 1                          \#if 1 remove working dir on exit
 /path/to/pipeline/ppln     \
 20                  \#max number of physical cpu cores to utilize
-all   # 1-12 if process only region defined in /ppln/data, all - work on full file 
+all  \ # 1-12 if process only region defined in /ppln/data, all - work on full file 
+NO    # YES/NO delete/not delete input bam files
+```
+
+        Submitting via _sbatch_
+```
+sbatch -cb --exclusive trio1 b1 -D ./ -e trio1.err -o trio1.out --wrap="/mnt/xfs1/home/asalomatov/projects/pipeline/ppln/pipe03.sh /mnt/xfs1/scratch/asalomatov/data/SPARK/bam/batch_2 /mnt/xfs1/scratch/asalomatov/data/SPARK/vars/b2/all C9 WG 0 work /mnt/xfs1/home/asalomatov/projects/pipeline/ppln/include.mk YES ,FixGroups,HaplotypeCallerGVCF,Platypus,Freebayes, 0 /mnt/xfs1/home/asalomatov/projects/pipeline/ppln 25 all NO"
 ```
 
 ### Validation
