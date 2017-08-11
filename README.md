@@ -59,7 +59,7 @@ Running it:
 ~/pipeline/ppln/pipe03.sh     \
 /path/to/input/bams/       \ #dir with bam file(s)
 /path/to/output/dir        \ #will be created, for final output, metrics, log. 
-familycode                 \ #124 if bams are 123.p1.bam, 123.fa.bam, 123.mo.bam
+familycode                 \ #123 if bams are 123.p1.bam, 123.fa.bam, 123.mo.bam. This could be a larger group of files with a common prefix.
 WG                         \ #binning method EX, WG(recommended)
 0                          \ #set to 0, if set to 1 wil use existing regions - for testing
 tmp                        \ #if tmp work in /tmp, else work in output dir
@@ -72,10 +72,12 @@ YES                         \ #if YES/NO - delete/don't delete intermediate file
 all  \ # 1-12 if process only region defined in /ppln/data, all - work on full file 
 NO    # YES/NO delete/not delete input bam files
 ```
+Familycode in the command above is will used to list input bam files using wildcard, e.g. familycode*.bam.
+If your group of bamfiles do not have a common prefix, create one via symbolic links.
 
-        Submitting via _sbatch_
+Submitting via *sbatch*
 ```
-sbatch -cb --exclusive trio1 b1 -D ./ -e trio1.err -o trio1.out --wrap="/mnt/xfs1/home/asalomatov/projects/pipeline/ppln/pipe03.sh /mnt/xfs1/scratch/asalomatov/data/SPARK/bam/batch_2 /mnt/xfs1/scratch/asalomatov/data/SPARK/vars/b2/all C9 WG 0 work /mnt/xfs1/home/asalomatov/projects/pipeline/ppln/include.mk YES ,FixGroups,HaplotypeCallerGVCF,Platypus,Freebayes, 0 /mnt/xfs1/home/asalomatov/projects/pipeline/ppln 25 all NO"
+sbatch -N1 --exclusive -J batch2 -e batch2.err -o batch2.out --wrap="/mnt/xfs1/home/asalomatov/projects/pipeline/ppln/pipe03.sh /mnt/xfs1/scratch/asalomatov/data/SPARK/bam/batch_2 /mnt/xfs1/scratch/asalomatov/data/SPARK/vars/b2/all batch2 WG 0 work /mnt/xfs1/home/asalomatov/projects/pipeline/ppln/include.mk YES ,FixGroups,HaplotypeCallerGVCF,Platypus,Freebayes, 0 /mnt/xfs1/home/asalomatov/projects/pipeline/ppln 25 all NO"
 ```
 
 ### Validation
