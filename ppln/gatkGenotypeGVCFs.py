@@ -2,7 +2,7 @@
 
 '''
 import sys, subprocess
-sys.path.insert(0, '/nethome/asalomatov/projects/ppln')
+# sys.path.insert(0, '/nethome/asalomatov/projects/ppln')
 import logProc
 
 options = '''  \
