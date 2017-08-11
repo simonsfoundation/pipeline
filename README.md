@@ -25,7 +25,6 @@ a 205-family (685 exomes) collection at Simons Foundation.
    - Apply GATK variant recalibration
    - Apply hard variant filters
    - Annotate variants
-   - Call de novo variants with DNMFilter (in development)
    - Validation against CEUTrio, NA12878
 
 ### Getting started
