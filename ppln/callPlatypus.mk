@@ -30,15 +30,15 @@ $(targ): $(dep1) $(dep2)
 	tabix -f -p vcf $$@
 	vt uniq -o $$@-u.vcf.gz $$@
 	tabix -p vcf $$@-u.vcf.gz
-	vt decompose -o $$@-d.vcf.gz $$@-u.vcf.gz
-	tabix -p vcf $$@-d.vcf.gz
-	vt normalize -r $(GENOMEREF) -o $$@-n.vcf.gz $$@-d.vcf.gz
+#	vt decompose -o $$@-d.vcf.gz $$@-u.vcf.gz
+#	tabix -p vcf $$@-d.vcf.gz
+	vt normalize -r $(GENOMEREF) -o $$@-n.vcf.gz $$@-u.vcf.gz
 	tabix -p vcf $$@-n.vcf.gz
 	vt sort -o $$@-s.vcf.gz $$@-n.vcf.gz
 	cp -f $$@-s.vcf.gz $$@
 	tabix -f -p vcf $$@
 	rm $$@-u.vcf.gz*
-	rm $$@-d.vcf.gz*
+#	rm $$@-d.vcf.gz*
 	rm $$@-n.vcf.gz*
 	rm $$@-s.vcf.gz*
 
@@ -58,13 +58,13 @@ $(targ): $(dep1) $(dep2)
 	tabix -p vcf $$@-u.vcf.gz
 	vt decompose -o $$@-d.vcf.gz $$@-u.vcf.gz
 	tabix -p vcf $$@-d.vcf.gz
-	vt normalize -r $(GENOMEREF) -o $$@-n.vcf.gz $$@-d.vcf.gz
-	tabix -p vcf $$@-n.vcf.gz
-	vt sort -o $$@-s.vcf.gz $$@-n.vcf.gz
+#	vt normalize -r $(GENOMEREF) -o $$@-n.vcf.gz $$@-d.vcf.gz
+#	tabix -p vcf $$@-n.vcf.gz
+	vt sort -o $$@-s.vcf.gz $$@-u.vcf.gz
 	cp -f $$@-s.vcf.gz $$@
 	tabix -f -p vcf $$@
 	rm $$@-u.vcf.gz*
-	rm $$@-d.vcf.gz*
+#	rm $$@-d.vcf.gz*
 	rm $$@-n.vcf.gz*
 	rm $$@-s.vcf.gz*
 
