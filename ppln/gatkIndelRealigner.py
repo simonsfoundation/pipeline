@@ -13,7 +13,7 @@ read_filter = '--read_filter BadCigar'
 
 print '\nsys.args   :', sys.argv[1:]
 inbam, inntrv, outfile, refGenome, knownindels, tmpdir, gatk, outdir = sys.argv[1:]
-cmd = 'java -Xms750m -Xmx5g -XX:+UseSerialGC -Djava.io.tmpdir=%(tmpdir)s -jar %(gatk)s -T IndelRealigner -I %(inbam)s --known %(knownindels)s -targetIntervals %(inntrv)s -o %(outfile)s -R %(refGenome)s %(dcov)s %(read_filter)s %(consensusDeterminationModel)s %(compress)s'
+cmd = 'java -Xms750m -Xmx5g -XX:+UseSerialGC -Djava.io.tmpdir=%(tmpdir)s -jar %(gatk)s -T IndelRealigner -I %(inbam)s -known %(knownindels)s -targetIntervals %(inntrv)s -o %(outfile)s -R %(refGenome)s %(dcov)s %(read_filter)s %(consensusDeterminationModel)s %(compress)s'
 cmd = cmd % locals()
 print cmd
 logProc.logProc(outfile, outdir, cmd, 'started')

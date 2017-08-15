@@ -11,8 +11,8 @@ interval_padding = '--interval_padding 200'
 read_filter = '--read_filter BadCigar'
 
 print '\nsys.args   :', sys.argv[1:]
-inbam, inbed, outfile, refGenome, knownindels, tmpdir, gatk, gaps, outdir = sys.argv[1:]
-cmd = 'java -Xms750m -Xmx10g -XX:+UseSerialGC -Djava.io.tmpdir=%(tmpdir)s -jar %(gatk)s -T RealignerTargetCreator -I %(inbam)s --known %(knownindels)s -o %(outfile)s -R %(refGenome)s %(ntFlag)s %(read_filter)s -L %(inbed)s'
+inbam, outfile, refGenome, knownindels, tmpdir, gatk, gaps, outdir = sys.argv[1:]
+cmd = 'java -Xms750m -Xmx10g -XX:+UseSerialGC -Djava.io.tmpdir=%(tmpdir)s -jar %(gatk)s -T RealignerTargetCreator -I %(inbam)s --known %(knownindels)s -o %(outfile)s -R %(refGenome)s %(ntFlag)s %(read_filter)s'
 #cmd = 'java -Xms750m -Xmx2500m -XX:+UseSerialGC -Djava.io.tmpdir=%(tmpdir)s -jar %(gatk)s -T RealignerTargetCreator -I %(inbam)s -o %(outfile)s -R %(refGenome)s %(ntFlag)s %(read_filter)s -L %(inbed)s -XL %(gaps)s'
 cmd = cmd % locals()
 print cmd

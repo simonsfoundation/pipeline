@@ -20,8 +20,8 @@ $(info $(o0))
 
 all: $(o0)
 
-$(OUTDIR)/%$(SUFFIX).bam.intervals: $(INDIR)/%$(SUFFIX).bam $(INDIR)/%$(SUFFIX).bed
+$(OUTDIR)/%$(SUFFIX).bam.intervals: $(INDIR)/%$(SUFFIX).bam
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	python $(SRCDIR)/gatkRealignerTargCreator.py $^ $@ $(GENOMEREF) $(MILLSINDEL) $(TMPDIR) $(GATK) $(GAPS) $(LOGDIR)
+	python $(SRCDIR)/gatkRealignerTargCreator.py $< $@ $(GENOMEREF) $(MILLSINDEL) $(TMPDIR) $(GATK) $(GAPS) $(LOGDIR)
