@@ -6,7 +6,7 @@
 # /mnt/ceph/asalomatov/SSC_Eichler/data_S3/                           \
 # /mnt/ceph/asalomatov/SSC_Eichler/rerun/ssc11056 11056 WG 0 tmp      \
 # /nethome/asalomatov/projects/ppln/include_150607_new_cl.mk 1        \
-# ,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,SplitBam,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF, \
+# ,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,Freebayes,Platypus,HaplotypeCallerGVCF, \
 # 1        \
 # /path/to/pipeline/ppln  \
 # 20  \
