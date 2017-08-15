@@ -2,14 +2,14 @@
 #default: all
 SHELL = /bin/bash
 USR = $(shell whoami)
-INCLMK = /nethome/asalomatov/projects/ppln/include.mk
+INCLMK = ~/projects/pipeline/ppln/include.mk
 include $(INCLMK)
 ### may override on cl
 FAMCODE = 1
 SUFFIX = -rlgn
 PROJ = mktest
-INDIR = /mnt/scratch/$(USR)/bioppln/inputs
-OUTDIR = /mnt/scratch/$(USR)/bioppln/$(PROJ)/outputs
+INDIR = .
+OUTDIR = .
 LOGDIR = $(OUTDIR)
 TMPDIR = /tmp/$(USR)/$(PROJ)
 ###
@@ -20,8 +20,8 @@ $(info $(o0))
 
 all: $(o0)
 
-$(OUTDIR)/%$(SUFFIX).bam.table: $(INDIR)/%$(SUFFIX).bam $(INDIR)/%.bed
+$(OUTDIR)/%$(SUFFIX).bam.table: $(INDIR)/%$(SUFFIX).bam
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	python $(SRCDIR)/gatkBaseRecalibrator.py $^ $@ $(GENOMEREF) $(TMPDIR) $(GATK) $(DBSNP) $(GAPS) $(LOGDIR)
+	python $(SRCDIR)/gatkBaseRecalibrator.py $< $@ $(GENOMEREF) $(TMPDIR) $(GATK) $(DBSNP) $(LOGDIR)

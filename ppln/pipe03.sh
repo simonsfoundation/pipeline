@@ -603,22 +603,22 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
         echo "copying ${famcode}-JHC-vars.vcf.gz failed"
         # exit 1
     fi
-    bamfiles=$(ls ${workdir}/*.bam)
-    ls ${workdir}/*bin.g.vcf | xargs -n1 -P $P bgzip
-    ls ${workdir}/*bin.g.vcf.gz | xargs -n1 -P $P tabix -p vcf
-    for bf in $bamfiles 
-    do
-        echo $bf
-        bn="${bf%.*}"
-        echo $bn
-	bcftools concat -a -D  ${bn}*bin.g.vcf.gz > ${bn}-temp.g.vcf
-	bcftools view -h ${bn}-temp.g.vcf > ${bn}.g.vcf
-	bcftools view -H ${bn}-temp.g.vcf | sort -V -k1,1 -k2,2 >> ${bn}.g.vcf
-	bgzip -f ${bn}.g.vcf
-	tabix -f -p vcf ${bn}.g.vcf.gz
-	rm ${bn}*-bin.g.vcf*
+#    bamfiles=$(ls ${workdir}/*.bam)
+#    ls ${workdir}/*bin.g.vcf | xargs -n1 -P $P bgzip
+#    ls ${workdir}/*bin.g.vcf.gz | xargs -n1 -P $P tabix -p vcf
+#    for bf in $bamfiles 
+#    do
+#        echo $bf
+#        bn="${bf%.*}"
+#        echo $bn
+#	bcftools concat -a -D  ${bn}*bin.g.vcf.gz > ${bn}-temp.g.vcf
+#	bcftools view -h ${bn}-temp.g.vcf > ${bn}.g.vcf
+#	bcftools view -H ${bn}-temp.g.vcf | sort -V -k1,1 -k2,2 >> ${bn}.g.vcf
+#	bgzip -f ${bn}.g.vcf
+#	tabix -f -p vcf ${bn}.g.vcf.gz
+#	rm ${bn}*-bin.g.vcf*
 #        cp -v -p ${bn}.g.vcf.gz* ${outdir}/
-    done
+ #   done
     echo "$(date) : timing for $famcode end of haplotypecaller gvcf"
 fi
 

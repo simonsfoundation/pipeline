@@ -8,9 +8,10 @@ import sys, subprocess
 sys.path.insert(0, '~/asalomatov/projects/ppln')
 import logProc
 
-options = '''  \
---suppressCommandLineHeader \
-'''
+options = ' '
+#options = '''  \
+#--suppressCommandLineHeader \
+#'''
 #-genotypeMergeOptions UNIQUIFY \
 
 print '\nsys.args   :', sys.argv[1:]

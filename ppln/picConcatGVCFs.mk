@@ -4,8 +4,8 @@ USR = $(shell whoami)
 INCLMK = ~/projects/pipeline/ppln/include.mk
 include $(INCLMK)
 ### may override on cl
-FAMCODE = 
-SUFFIX = .g.vcf.gz
+FAMCODE = 1
+SUFFIX = .g.vcf
 PROJ = mktest
 INDIR = .
 OUTDIR = .
@@ -14,12 +14,12 @@ TMPDIR = /tmp/$(USR)/$(PROJ)
 ###
 inFiles = $(sort $(wildcard $(INDIR)/$(FAMCODE)*$(SUFFIX)))
 
-all: $(OUTDIR)/$(FAMCODE).g.vcf
+all: $(OUTDIR)/$(FAMCODE)$(SUFFIX)
 
-$(OUTDIR)/$(FAMCODE).g.vcf: $(inFiles)
+$(OUTDIR)/$(FAMCODE)$(SUFFIX): $(inFiles)
 	mkdir -p $(LOGDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	python $(SRCDIR)/gatkCombineGVCF.py $(GENOMEREF) $(TMPDIR) $(GATK) $(LOGDIR) $@ $^
+	python $(SRCDIR)/picMergeVcf.py $(GENOMEREF) $(TMPDIR) $(PICARD) $(LOGDIR) $@ $^
 	$(BGZIP) -f $@
 	$(TABIX) -f -p vcf $@.gz
