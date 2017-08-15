@@ -1,15 +1,15 @@
 ### 
-default: all
+#default: all
 SHELL = /bin/bash
 USR = $(shell whoami)
-INCLMK = /nethome/asalomatov/projects/ppln/include.mk
+INCLMK = ~/projects/pipeline/ppln/include.mk
 include $(INCLMK)
 ### may override on cl
 FAMCODE = 1
 SUFFIX = -fxgr
 PROJ = mktest
-INDIR = /mnt/scratch/$(USR)/bioppln/inputs
-OUTDIR = /mnt/scratch/$(USR)/bioppln/$(PROJ)/outputs
+INDIR = .
+OUTDIR = .
 LOGDIR = $(OUTDIR)
 TMPDIR = /tmp/$(USR)/$(PROJ)
 RMINPUT = NO
@@ -22,17 +22,17 @@ $(info $(o0))
 all: $(o0)
 
 ifeq ($(RMINPUT),YES)
-$(OUTDIR)/%$(SUFFIX)-flr.bam: $(INDIR)/%$(SUFFIX).bam $(INDIR)/%$(SUFFIX).bam.bai
+$(OUTDIR)/%$(SUFFIX)-flr.bam: $(INDIR)/%$(SUFFIX).bam
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	python $(SRCDIR)/gatkPrintReads.py $^ $@ $(GATK) $(GENOMEREF) $(TMPDIR) $(LOGDIR)
+	python $(SRCDIR)/gatkPrintReads.py $< $@ $(GATK) $(GENOMEREF) $(TMPDIR) $(LOGDIR)
 	rm $^
 else
-$(OUTDIR)/%$(SUFFIX)-flr.bam: $(INDIR)/%$(SUFFIX).bam $(INDIR)/%$(SUFFIX).bam.bai
+$(OUTDIR)/%$(SUFFIX)-flr.bam: $(INDIR)/%$(SUFFIX).bam
 	mkdir -p $(OUTDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	python $(SRCDIR)/gatkPrintReads.py $^ $@ $(GATK) $(GENOMEREF) $(TMPDIR) $(LOGDIR)
+	python $(SRCDIR)/gatkPrintReads.py $< $@ $(GATK) $(GENOMEREF) $(TMPDIR) $(LOGDIR)
 endif
 

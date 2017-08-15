@@ -55,8 +55,8 @@ DBSPIDEX = /mnt/xfs1/scratch/asalomatov/data/spidex/spidex_public_noncommercial_
 #BAM2SMPL = /mnt/xfs1/scratch/asalomatov/data/SPARK/info/b10_bam2sp.yml
 #BAM2SMPL = /mnt/xfs1/scratch/asalomatov/data/SPARK/info/b1-10_bam2sp.yml
 #BAM2SMPL = /mnt/xfs1/scratch/asalomatov/data/SPARK/info/b1-10_bam2sp_sf_batches.yml
-#BAM2SMPL = /mnt/ceph/users/asalomatov/regeneron_spark_pilot/info/bam2SPid.yml
-BAM2SMPL = /mnt/xfs1/scratch/asalomatov/bioppln/inputs1/bam2smpl.yml
+BAM2SMPL = /mnt/ceph/users/asalomatov/regeneron_spark_pilot/info/bam2SPid.yml
+#BAM2SMPL = /mnt/xfs1/scratch/asalomatov/bioppln/inputs1/bam2smpl.yml
 REGIONSBED = /mnt/xfs1/scratch/asalomatov/data/b37/b37-chrom.bed
 #######################################################################
 #/mnt/xfs1/bioinfoCentos7/software/installs/bcbio_nextgen/150617/bin

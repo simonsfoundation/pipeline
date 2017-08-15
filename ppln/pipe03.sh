@@ -98,9 +98,6 @@ if [[ $conf == *",FixGroups,"* ]]; then
         echo "indexBam.mk INCLMK=$inclmk finished with errors"
         exit 1
     fi
-    sfx='-fxgr'
-    prevsfx=$sfx
-    inpd=$workdir
 fi
 
 
@@ -115,6 +112,13 @@ if [[ $conf == *",Reorder,"* ]]; then
     sfx='-re'
     prevsfx=$sfx
     inpd=$workdir
+    make -j $P -f ${srcdir}/indexBam.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo "indexBam.mk INCLMK=$inclmk finished with errors"
+        exit 1
+    fi
 fi
 
 if [[ $conf == *",FilterBam,"* ]]; then
@@ -131,6 +135,13 @@ if [[ $conf == *",FilterBam,"* ]]; then
     sfx='-flr'
     prevsfx=$sfx
     inpd=$workdir
+    make -j $P -f ${srcdir}/indexBam.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo "indexBam.mk INCLMK=$inclmk finished with errors"
+        exit 1
+    fi
 fi
 
 if [[ $conf == *",DedupBam,"* ]]; then

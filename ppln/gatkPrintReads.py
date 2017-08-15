@@ -21,7 +21,7 @@ options = '''\
 %(nctFlag)s'''
 
 print '\nsys.args   :', sys.argv[1:]
-inbam, inbai, outbam, gatkjar, refGenome, tmpdir, outdir = sys.argv[1:]
+inbam, outbam, gatkjar, refGenome, tmpdir, outdir = sys.argv[1:]
 cmd = 'java -Xms750m -Xmx2500m -XX:+UseSerialGC -Djava.io.tmpdir=%(tmpdir)s -jar %(gatkjar)s ' + options 
 cmd = cmd % locals()
 #print cmd
