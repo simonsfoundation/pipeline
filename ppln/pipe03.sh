@@ -476,35 +476,6 @@ if [[ $conf == *",HaplotypeCaller,"* ]]; then
     fi
 fi
 
-if [[ $conf == *",Freebayes,"* ]]; then
-    echo "$(date) : timing for $famcode start of freebayes"
-
-    make -j $P -f ${srcdir}/callFreebayes.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
-    ret=$?
-    echo $ret
-    if [ $ret -ne 0 ]; then
-        echo 'callFreebayes.mk INCLMK=$inclmk finished with errors'
-        #exit 1
-    fi
-
-    make -j $P -f ${srcdir}/vcfConcat.mk INCLMK=$inclmk FAMCODE=${famcode}-FB INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir SUFFIX=-bin.vcf.gz
-    ret=$?
-    echo $ret
-    if [ $ret -ne 0 ]; then
-        echo "picMergeVcf.mk INCLMK=$inclmk FB finished with errors"
-        #exit 1
-    fi
-
-    cp -p ${workdir}/${famcode}-FB.vcf.gz* ${outdir}/
-    ret=$?
-    echo $ret
-    if [ $ret -ne 0 ]; then
-        echo "copying ${famcode}-FB.vcf.gz failed"
-        # exit 1
-    fi
-    rm ${workdir}/*FB-*-bin.vcf.gz*
-    echo "$(date) : timing for $famcode end of freebayes"
-fi
 
 if [[ $conf == *",Platypus,"* ]]; then
     echo "$(date) : timing for $famcode start of platypus"
@@ -631,6 +602,36 @@ if [[ $conf == *",HaplotypeCallerGVCF,"* ]]; then
 #        cp -v -p ${bn}.g.vcf.gz* ${outdir}/
  #   done
     echo "$(date) : timing for $famcode end of haplotypecaller gvcf"
+fi
+
+if [[ $conf == *",Freebayes,"* ]]; then
+    echo "$(date) : timing for $famcode start of freebayes"
+
+    make -j $P -f ${srcdir}/callFreebayes.mk SUFFIX=$sfx INCLMK=$inclmk FAMCODE=$famcode INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo 'callFreebayes.mk INCLMK=$inclmk finished with errors'
+        #exit 1
+    fi
+
+    make -j $P -f ${srcdir}/vcfConcat.mk INCLMK=$inclmk FAMCODE=${famcode}-FB INDIR=$inpd OUTDIR=$workdir LOGDIR=$outdir SUFFIX=-bin.vcf.gz
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo "picMergeVcf.mk INCLMK=$inclmk FB finished with errors"
+        #exit 1
+    fi
+
+    cp -p ${workdir}/${famcode}-FB.vcf.gz* ${outdir}/
+    ret=$?
+    echo $ret
+    if [ $ret -ne 0 ]; then
+        echo "copying ${famcode}-FB.vcf.gz failed"
+        # exit 1
+    fi
+    rm ${workdir}/*FB-*-bin.vcf.gz*
+    echo "$(date) : timing for $famcode end of freebayes"
 fi
 
 if [[ $conf == *",RecalibVariants,"* ]]; then
