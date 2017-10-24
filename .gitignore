@@ -11,6 +11,7 @@ variants/*.yml
 variants/*.txt
 ppln/old_includes/
 ppln/slurm/
+ppln/include*.mk
 
 *#*#
 .~lock*
