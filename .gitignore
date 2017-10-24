@@ -10,6 +10,7 @@ variants/grid_search*
 variants/*.yml
 variants/*.txt
 ppln/old_includes/
+ppln/slurm/
 
 *#*#
 .~lock*
