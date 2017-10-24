@@ -44,7 +44,7 @@ $(targ): $(dep1) $(dep2)
 
 endef      
 define runCallerSplitBam
-#IA: Andrei has different treatment: should decompose be commented, not normalize? - check later
+#IA: decompose should be commented, not normalize
 $(eval targ = $(OUTDIR)/$(FAMCODE)-PL-$(1)-bin.vcf.gz)
 targs += $(targ)
 $(eval dep1 = $(INDIR)/$(1)__bin__$(FAMCODE)-uni-mrg.bed)
