@@ -9,6 +9,8 @@ variants/*.h5
 variants/grid_search*
 variants/*.yml
 variants/*.txt
+ppln/old_includes/
+
 *#*#
 .~lock*
 .#*
