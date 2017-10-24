@@ -14,6 +14,7 @@ LOGDIR = $(OUTDIR)
 TMPDIR = /tmp/$(USR)/$(PROJ)
 ###
 
+
 inBam = $(wildcard $(INDIR)/$(PREFIX)*$(SUFFIX).bam)
 $(info $(inBam))
 #inBed = $(patsubst %$(SUFFIX).bam,%$(SUFFIX).bed,$(inBam))
