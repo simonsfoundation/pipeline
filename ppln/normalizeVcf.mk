@@ -32,12 +32,12 @@ $(OUTDIR)/%-norm$(SUFFIX): $(INDIR)/%$(SUFFIX)
 	mkdir -p $(LOGDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	$(VT) normalize -r $(GENOMEREF) -q -o - $< | bgzip > $@ 
-	$(TABIX) -p vcf $@
+	vt normalize -r $(GENOMEREF) -q -o - $< | bgzip > $@ 
+	tabix -p vcf $@
 else
 $(OUTDIR)/%-norm$(SUFFIX): $(INDIR)/%$(SUFFIX)
 	mkdir -p $(LOGDIR)
 	mkdir -p $(TMPDIR)
 	mkdir -p $(OUTDIR)
-	$(VT) normalize -r $(GENOMEREF) -q -o $@ $<
+	vt normalize -r $(GENOMEREF) -q -o $@ $<
 endif
