@@ -1,7 +1,7 @@
 ### 
 SHELL = /bin/bash
 USR = $(shell whoami)
-INCLMK = ~/projects/pipeline/ppln/include.mk
+INCLMK = /mnt/home/irina/Desktop/pipeline/ppln/include.mk
 include $(INCLMK)
 ### may override on cl
 FAMCODE = 1
