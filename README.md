@@ -4,10 +4,10 @@
 
 *pipeline* is a computational engine for genetic variant detection in
 a single sample, or in a familial cohort (typically a trio, or a quad). It is a
-full-featured, and scalable pipeline that is simple, and modular in its design.
+full-featured, and scalable pipeline that is modular in its design.
 Almost every step in the pipeline is done via a *Makefile* (GNU make). These
 makefiles can be used on their own to accomplish common bioinformatics operations, or
-they can be stung together in a shell script to compose a pipeline. *pipeline*                                 u
+they can be stung together in a shell script to compose a pipeline. *pipeline*                                 
 is well suited for processing large number of familiar cohorts, and has been deployed on
 a 205-family (685 exomes) collection at Simons Foundation.
 
@@ -17,7 +17,7 @@ a 205-family (685 exomes) collection at Simons Foundation.
    
 ### From BAM files to de novo germline mutations
 
-   - BAM file(s) is input
+   - Input: BAM file(s) 
    - Optionally process BAM files according to GATK best practices
    - Compute callable regions, and subdivide genome into bins of approximately
    equal size for parallelization
@@ -25,7 +25,8 @@ a 205-family (685 exomes) collection at Simons Foundation.
    - Apply GATK variant recalibration
    - Apply hard variant filters
    - Annotate variants
-   - Validation against CEUTrio, NA12878
+   
+   Validation was done against CEUTrio, NA12878
 
 ### Getting started
 
@@ -43,36 +44,35 @@ Besides commonly present *Python 2.7, JDK, GNU make*, the following packages are
    11. [vcflib](https://github.com/ekg/vcflib)
    12. [SnpEff](http://snpeff.sourceforge.net/)
    
-All except GATK come with an install of [bcbio-nextgen](https://github.com/chapmanb/bcbio-nextgen), an excellent resource to compare against, and to learn from.
+All except GATK come with an install of [bcbio-nextgen](https://github.com/chapmanb/bcbio-nextgen).
 
 ```
 cd ~
 git clone https://github.com/simonsfoundation/pipeline.git
 ```
 
-Next step is to edit *include.mk* defining *Makefile* variables to reflect your setup.
+To setup the configuration for the pipeline, you need to edit *include.mk* defining *Makefile* variables.
 
-Running it:
+The pipeline is run as follows:
 
 ```
 ~/pipeline/ppln/pipe03.sh     \
 /path/to/input/bams/       \ #dir with bam file(s)
-/path/to/output/dir        \ #will be created, for final output, metrics, log. 
-familycode                 \ #123 if bams are 123.p1.bam, 123.fa.bam, 123.mo.bam. This could be a larger group of files with a common prefix.
+/path/to/output/dir        \ #will be created for final output, metrics, log. 
+familycode                 \ # common prefix for a group of BAM files (familycode*.bam): family, batch etc;If your BAM files do not have a common prefix, create one via symbolic links
 WG                         \ #binning method EX, WG(recommended)
-0                          \ #set to 0, if set to 1 wil use existing regions - for testing
-tmp                        \ #if tmp work in /tmp, else work in output dir
+0                          \ #set to 0; if set to 1, pipeline will use existing regions (testing purposes)
+tmp                        \ #if "tmp", work in /tmp, else work in output dir
 ~/pipeline/ppln/include.mk \ #makefile with variable definition
 YES                         \ #if YES/NO - delete/don't delete intermediate files
 ,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF, \
-1                          \#if 1 remove working dir on exit
+1                          \#if 1, remove working dir on exit
 /path/to/pipeline/ppln     \
 20                  \#max number of physical cpu cores to utilize
 all  \ # 1-12 if process only region defined in /ppln/data, all - work on full file 
 NO    # YES/NO delete/not delete input bam files
 ```
-Familycode in the command above is will used to list input bam files using wildcard, e.g. familycode*.bam.
-If your group of bamfiles do not have a common prefix, create one via symbolic links.
+
 
 Submitting via *sbatch*
 ```
