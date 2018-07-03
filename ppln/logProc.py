@@ -14,9 +14,7 @@ def logProc(outputfile, outputdir, cmd, descr, stderr_out=None):
     '''
     ts = time.time()
     st = datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d__%H_%M_%S')
-#    outdir = os.path.dirname(os.path.abspath(outputfile))
     outdir = os.path.join(outputdir, 'logs')
-#    if not os.path.isdir(outdir): os.mkdir(outdir)
     makeDir(outdir)
     outfn = os.path.basename(outputfile)
     logfn = st + '___' + '_'.join(outfn.split('.')) + '___'+descr
