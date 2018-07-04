@@ -7,14 +7,9 @@ a single sample, or in a familial cohort (typically a trio, or a quad). It is a
 full-featured, and scalable pipeline that is modular in its design.
 Almost every step in the pipeline is done via a *Makefile* (GNU make). These
 makefiles can be used on their own to accomplish common bioinformatics operations, or
-they can be stung together in a shell script to compose a pipeline. *pipeline*                                 
-is well suited for processing large number of familiar cohorts, and has been deployed on
-a 205-family (685 exomes) collection at Simons Foundation.
+they can be stung together in a shell script to compose a pipeline. 
+*pipeline* is well suited for processing large number of familiar cohorts, and has been deployed on 462 families from SPARK collection at Simons Foundation.
 
-### Cluster environments
-   - Grid Engine
-   - Slurm
-   
 ### From BAM files to de novo germline mutations
 
    - Input: BAM file(s) 
@@ -26,11 +21,11 @@ a 205-family (685 exomes) collection at Simons Foundation.
    - Apply hard variant filters
    - Annotate variants
    
-   Validation was done against CEUTrio, NA12878
+Validation was done against CEUTrio, NA12878
 
 ### Getting started
 
-Besides commonly present *Python 2.7, JDK, GNU make*, the following packages are required
+Besides *Python 2.7, JDK, GNU make*, the following packages are required
    1. [GATK](https://www.broadinstitute.org/gatk/)
    2. [freebayes](https://github.com/ekg/freebayes)
    3. [platypus](http://www.well.ox.ac.uk/platypus)
@@ -44,7 +39,7 @@ Besides commonly present *Python 2.7, JDK, GNU make*, the following packages are
    11. [vcflib](https://github.com/ekg/vcflib)
    12. [SnpEff](http://snpeff.sourceforge.net/)
    
-All except GATK come with an install of [bcbio-nextgen](https://github.com/chapmanb/bcbio-nextgen).
+All (except GATK) can be installed with an install of [bcbio-nextgen](https://github.com/chapmanb/bcbio-nextgen).
 
 ```
 cd ~
@@ -73,6 +68,9 @@ all  \ # 1-12 if process only region defined in /ppln/data, all - work on full f
 NO    # YES/NO delete/not delete input bam files
 ```
 
+### Cluster environments
+   - Grid Engine
+   - Slurm
 
 Submitting via *sbatch*
 ```
