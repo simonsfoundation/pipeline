@@ -79,10 +79,10 @@ sbatch -N1 --exclusive -J batch2 -e batch2.err -o batch2.out --wrap="/mnt/xfs1/h
 ```
 
 ### Validation
+([freebayes tutorial](http://clavius.bc.edu/~erik/CSHL-advanced-sequencing/freebayes-tutorial.html), [bcbio blog post](http://bcb.io/2014/10/07/joint-calling/))
 
 #### NA12878
-See [this freebayes tutorial](http://clavius.bc.edu/~erik/CSHL-advanced-sequencing/freebayes-tutorial.html), and [this bcbio blog post](http://bcb.io/2014/10/07/joint-calling/) for a good exposition. 
-
+ 
 1. Download chromosome 20 high coverage bam file, Broad Institute's truth set, and NIST Genome in a Bottle target regions:
 ```
 wget ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/working/20130103_high_cov_trio_bams/NA12878/alignment/NA12878.chrom20.ILLUMINA.bwa.CEU.high_coverage.20120522.bam
