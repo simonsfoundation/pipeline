@@ -16,7 +16,7 @@ they can be used together in a shell script to compose a pipeline.
    - Optionally process BAM files according to GATK best practices
    - Compute callable regions, and subdivide genome into bins of approximately
    equal size for parallelization
-   - Call variants with a choice of GATK HaplotypeCaller, GATK HaplotypeCaller in GVCF mode, Freebayes, Platypus 
+   - Call variants with a choice of GATK HaplotypeCaller in GVCF mode, Freebayes, Platypus 
    - Apply GATK variant recalibration
    - Apply hard variant filters
    
@@ -62,7 +62,7 @@ WG                         \ #binning method EX, WG(recommended)
 tmp                        \ #if "tmp", work in /tmp, else work in output dir
 ~/pipeline/ppln/include.mk \ #makefile with variable definition
 YES                         \ #if YES/NO - delete/don't delete intermediate files
-,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF, \
+,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,Freebayes,Platypus,HaplotypeCallerGVCF, \
 1                          \#if 1, remove working dir on exit
 /path/to/pipeline/ppln     \
 20                  \#max number of physical cpu cores to utilize
