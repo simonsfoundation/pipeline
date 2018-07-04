@@ -47,7 +47,7 @@ cd ~
 git clone https://github.com/simonsfoundation/pipeline.git
 ```
 
-To setup the configuration for the pipeline, you need to edit *include.mk* defining *Makefile* variables.
+To setup the configuration for the pipeline, you need to edit *include.mk* file that defines *Makefile* variables.
 
 The pipeline is run as follows:
 
