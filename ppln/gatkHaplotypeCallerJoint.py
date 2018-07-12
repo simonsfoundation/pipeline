@@ -6,7 +6,8 @@ sys.path.insert(0, '/nethome/asalomatov/projects/ppln')
 import logProc
 
 print '\nsys.args   :', sys.argv[1:]
-refGenome, tmpdir, gatk, dbsnp, gaps, outdir, outfile, inbed = sys.argv[1:9]
+#refGenome, tmpdir, gatk, dbsnp, gaps, outdir, outfile, inbed = sys.argv[1:9]
+refGenome, tmpdir, gatk, dbsnp, gaps, outdir, lib, outfile, inbed = sys.argv[1:10]
 
 if '3.2-2-gec30cee' in commands.getoutput('java -jar ' + gatk + ' -T HaplotypeCaller --version'):
     options = '''  \
@@ -66,10 +67,11 @@ else:
 
 I = ' -I '
 inbams = ''
-for f in sys.argv[9:]:
+#for f in sys.argv[9:]:
+for f in sys.argv[10:]:
     inbams += I + f
     
-cmd = 'java -Xms750m -Xmx3500m -XX:+UseSerialGC -Djava.io.tmpdir=%(tmpdir)s -Djava.library.path=/mnt/ceph/users/carriero/IrinaAstrovskaya/GATK_3.6/gatk-protected-3.6/public/VectorPairHMM/src/main/c++ -jar %(gatk)s -T HaplotypeCaller %(inbams)s -o %(outfile)s -R %(refGenome)s --dbsnp %(dbsnp)s -L %(inbed)s %(options)s'
+cmd = 'java -Xms750m -Xmx3500m -XX:+UseSerialGC -Djava.io.tmpdir=%(tmpdir)s -Djava.library.path=%(lib)s -jar %(gatk)s -T HaplotypeCaller %(inbams)s -o %(outfile)s -R %(refGenome)s --dbsnp %(dbsnp)s -L %(inbed)s %(options)s'
 #cmd = 'java -Xms750m -Xmx2500m -XX:+UseSerialGC -Djava.io.tmpdir=%(tmpdir)s -jar %(gatk)s -T HaplotypeCaller %(inbams)s -o %(outfile)s -R %(refGenome)s --dbsnp %(dbsnp)s -L %(inbed)s -XL %(gaps)s  %(options)s'
 cmd = cmd % locals()
 print cmd

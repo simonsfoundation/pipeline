@@ -29,7 +29,7 @@ $(eval JHC_dep1 = $(INDIR)/$(1)__bin__$(FAMCODE)-uni-mrg.bed)
 $(eval JHC_dep2 = $(2))
 
 $(JHC_targ): $(JHC_dep1) $(JHC_dep2)
-	python $(SRCDIR)/gatkHaplotypeCallerJoint.py $(GENOMEREF) $(TMPDIR) $(GATK) $(DBSNP) $(GAPS) $(LOGDIR) $$@ $$^
+	python $(SRCDIR)/gatkHaplotypeCallerJoint.py $(GENOMEREF) $(TMPDIR) $(GATK) $(DBSNP) $(GAPS) $(LOGDIR) $(DJAVA_LIB) $$@ $$^
 
 endef      
 #$(info $(JHC_targ))
