@@ -60,7 +60,7 @@ familycode                 \ # common prefix for a group of BAM files (familycod
 WG                         \ #binning method EX, WG(recommended)
 0                          \ #set to 0; if set to 1, pipeline will use existing regions (testing purposes)
 tmp                        \ #if "tmp", work in /tmp, else work in output dir
-~/pipeline/ppln/include.mk \ #makefile with variable definition
+~/pipeline/ppln/include_example.mk \ #makefile with variable definition
 YES                         \ #if YES/NO - delete/don't delete intermediate files
 ,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,Freebayes,Platypus,HaplotypeCallerGVCF, \
 1                          \#if 1, remove working dir on exit
@@ -95,7 +95,7 @@ wget -O NA12878-callable.bed.gz ftp://ftp-trace.ncbi.nih.gov/giab/ftp/data/NA128
 
 2. Run the pipeline:
 ```
-sbatch -J NA12878 -N 1 --exclusive ~/pipeline/ppln/pipe03.sh ./ ./NA12878 NA12878 WG 0 tmp ~/pipeline/ppln/include.mk 0 ,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF,RecalibVariants, 1 ~/pipeline/ppln/ 20 all
+sbatch -J NA12878 -N 1 --exclusive ~/pipeline/ppln/pipe03.sh ./ ./NA12878 NA12878 WG 0 tmp ~/pipeline/ppln/include_example.mk 0 ,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF,RecalibVariants, 1 ~/pipeline/ppln/ 20 all
 ```
 
 3. Restrict our consideration to chromosome 20, and to the confidently callable regions:
@@ -164,7 +164,7 @@ tabix -f -p vcf GiaB_NIST_RTG_v0_2.vcf.gz
 
 3. Run the pipeline
 ```
-sbatch -J CEUTrio -N 1 --exclusive ~/pipeline/ppln/pipe03.sh ./ ./CEUTrio CEUTrio WG 0 tmp ~/pipeline/ppln/include.mk 0 ,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF,RecalibVariants, 1 ~/pipeline/ppln/ 20 all
+sbatch -J CEUTrio -N 1 --exclusive ~/pipeline/ppln/pipe03.sh ./ ./CEUTrio CEUTrio WG 0 tmp ~/pipeline/ppln/include_example.mk 0 ,Reorder,FixGroups,FilterBam,DedupBam,Metrics,IndelRealign,BQRecalibrate,HaplotypeCaller,Freebayes,Platypus,HaplotypeCallerGVCF,RecalibVariants, 1 ~/pipeline/ppln/ 20 all
 ```
 
 4. Filter out loci where the proband is HomRef, one can use ```SnpSift``` to accomplish this task.
