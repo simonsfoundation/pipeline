@@ -48,7 +48,7 @@ git clone https://github.com/simonsfoundation/pipeline.git
 ```
 
 ### Running
-To setup the configuration for the pipeline, you need to edit *include.mk* file that defines *Makefile* variables.
+To setup the configuration for the pipeline, you need to edit *include_example.mk* file that defines *Makefile* variables.
 
 The pipeline is run as follows:
 
@@ -76,7 +76,7 @@ NO    # YES/NO delete/not delete input bam files
 
 Submitting via *sbatch*
 ```
-sbatch -N1 --exclusive -J batch2 -e batch2.err -o batch2.out --wrap="/mnt/xfs1/home/asalomatov/projects/pipeline/ppln/pipe03.sh /mnt/xfs1/scratch/asalomatov/data/SPARK/bam/batch_2 /mnt/xfs1/scratch/asalomatov/data/SPARK/vars/b2/all batch2 WG 0 work /mnt/xfs1/home/asalomatov/projects/pipeline/ppln/include.mk YES ,FixGroups,HaplotypeCallerGVCF,Platypus,Freebayes, 0 /mnt/xfs1/home/asalomatov/projects/pipeline/ppln 25 all NO"
+sbatch -N1 --exclusive -J batch2 -e batch2.err -o batch2.out --wrap="/mnt/xfs1/home/asalomatov/projects/pipeline/ppln/pipe03.sh /mnt/xfs1/scratch/asalomatov/data/SPARK/bam/batch_2 /mnt/xfs1/scratch/asalomatov/data/SPARK/vars/b2/all batch2 WG 0 work /mnt/xfs1/home/asalomatov/projects/pipeline/ppln/include_example.mk YES ,FixGroups,HaplotypeCallerGVCF,Platypus,Freebayes, 0 /mnt/xfs1/home/asalomatov/projects/pipeline/ppln 25 all NO"
 ```
 
 ### Validation
